@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
+
+    <style>
+        body {
+            background-color: #F8F8F8;
+        }
+    </style>
 </head>
 
 <body>
