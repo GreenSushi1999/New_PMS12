@@ -11,4 +11,9 @@ class evaluation extends Model
     protected $table = 'tblevaluation';
     public $timestamps = true;
 
+    public function indicators()
+    {
+        return $this->hasOne('App\indicators', 'cid', 'ind_cid');
+    }
+
 }

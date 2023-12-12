@@ -10,4 +10,6 @@ class achievement extends Model
     protected $primaryKey = 'cid';
     protected $table = 'tblachievement';
     public $timestamps = true;
+
+
 }
