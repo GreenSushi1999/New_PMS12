@@ -37,4 +37,9 @@ class performance extends Model
         return $this->hasMany('App\indicators', 'doc_cid', 'doc_type');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany('App\performance', 'perf_cid', 'cid');
+    }
+
 }

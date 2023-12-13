@@ -19,4 +19,5 @@ Route::post('/save-info', 'PerformanceController@save_info')->name('save-info');
 Route::post('/values', 'PerformanceController@values')->name('values');
 Route::get('/instruction/{performance_cid}/{ratee_cid}', 'PerformanceController@instruction');
 Route::get('/values-indicator/{performance_cid}/{ratee_cid}', 'PerformanceController@values_indicator');
+Route::post('/save-ratings', 'PerformanceController@save_ratings')->name('save-ratings');
 

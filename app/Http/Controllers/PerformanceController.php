@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\hr;
 use App\grade;
+use App\ratings;
 use App\document;
 use App\indicators;
 use App\performance;
+use App\perf_indicatorsAve;
 use Illuminate\Http\Request;
 
 class PerformanceController extends Controller
@@ -55,8 +57,6 @@ class PerformanceController extends Controller
         return view('pages.instruction', compact('grades', 'performance_cid', 'ratee_cid'));
     }
 
-
-
     public function values(Request $request)
     {
 
@@ -68,13 +68,50 @@ class PerformanceController extends Controller
 
     public function values_indicator($performance_cid, $ratee_cid)
     {
+
         $performance = performance::where('cid', $performance_cid)->first();
-        $indicators = $performance->indicators;
-
-
-        return view('pages.values_indicator', compact('indicators', 'performance_cid', 'ratee_cid'));
+        return view('pages.values_indicator', compact('performance', 'performance_cid', 'ratee_cid'));
     }
 
+
+    public function save_ratings(Request $request)
+    {
+        $data = $request->all();
+        $perf_cid = $data['performance_cid'];
+        $performance = performance::where('cid', $perf_cid)->first();
+        $ratings = ratings::where('perf_cid', $perf_cid)->get();
+
+        foreach ($performance->document->indicators as $perf_ind) {
+
+            foreach ($perf_ind->evaluation as $eval) {
+                if ($ratings->isEmpty()) {
+                    foreach ($performance->ratings as $perf_rate) {
+                        if ($perf_rate->eval_cid == $eval->cid) {
+                            $perf_rate->ratee_rate = ($data['ratee' . $eval->cid] == null ? '' : $data['ratee' . $eval->cid]);
+                            $perf_rate->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
+                            $perf_rate->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
+                            if ($eval->remarks == 1) {
+                                $perf_rate->remarks = ($data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid]);
+                            }
+                            $perf_rate->save();
+                        }
+                    }
+                } else {
+                    $ratings = new ratings();
+                    $ratings->perf_cid = $perf_cid;
+                    $ratings->eval_cid = $eval->cid;
+                    $ratings->ratee_rate = ($data['ratee' . $eval->cid] == null ? '' : $data['ratee' . $eval->cid]);
+                    $ratings->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
+                    $ratings->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
+                    if ($eval->remarks == 1) {
+                        $ratings->remarks = ($data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid]);
+                    }
+                    $ratings->save();
+
+                }
+            }
+        }
+    }
 
 
 }
