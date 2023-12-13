@@ -23,4 +23,18 @@ class performance extends Model
     {
         return $this->hasOne('App\perf_indicatorsAve', 'perf_cid', 'cid');
     }
+    public function hr()
+    {
+        return $this->hasOne('App\hr', 'EmpNo', 'ratee_cid');
+    }
+    public function document()
+    {
+        return $this->hasOne('App\document', 'cid', 'doc_type');
+    }
+
+    public function indicators()
+    {
+        return $this->hasMany('App\indicators', 'doc_cid', 'doc_type');
+    }
+
 }
