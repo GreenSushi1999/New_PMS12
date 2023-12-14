@@ -11,7 +11,10 @@ class perf_indicatorsAve extends Model
     protected $table = 'tblperf_indicatorsAve';
     public $timestamps = true;
 
-
+    public function performance()
+    {
+        return $this->hasOne('App\performance', 'cid', 'perf_cid');
+    }
     public function indicators()
     {
         return $this->hasOne('App\indicators', 'cid', 'ind_cid');

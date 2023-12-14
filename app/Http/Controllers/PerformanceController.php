@@ -77,43 +77,57 @@ class PerformanceController extends Controller
     public function save_ratings(Request $request)
     {
         $data = $request->all();
-        $perf_cid = $data['performance_cid'];
-        $performance = performance::where('cid', $perf_cid)->first();
-        $ratings = ratings::where('perf_cid', $perf_cid)->get();
+        $performance = performance::where('cid', $data['performance_cid'])->first();
 
-        foreach ($performance->document->indicators as $perf_ind) {
+        foreach ($performance->indicators as $perfInd) {
 
-            foreach ($perf_ind->evaluation as $eval) {
-                if ($ratings->isEmpty()) {
-                    foreach ($performance->ratings as $perf_rate) {
-                        if ($perf_rate->eval_cid == $eval->cid) {
-                            $perf_rate->ratee_rate = ($data['ratee' . $eval->cid] == null ? '' : $data['ratee' . $eval->cid]);
-                            $perf_rate->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
-                            $perf_rate->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
-                            if ($eval->remarks == 1) {
-                                $perf_rate->remarks = ($data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid]);
-                            }
-                            $perf_rate->save();
-                        }
-                    }
-                } else {
-                    $ratings = new ratings();
-                    $ratings->perf_cid = $perf_cid;
-                    $ratings->eval_cid = $eval->cid;
-                    $ratings->ratee_rate = ($data['ratee' . $eval->cid] == null ? '' : $data['ratee' . $eval->cid]);
-                    $ratings->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
-                    $ratings->rater_rate = ($data['rater' . $eval->cid] == null ? '' : $data['rater' . $eval->cid]);
+            $indicatorsAveExist = perf_indicatorsAve::where('perf_cid', $data['performance_cid'])->where('ind_cid', $perfInd->cid)->first();
+
+
+            if ($indicatorsAveExist) {
+                $indicatorsAveExist->ratee_ave = $data['ratee_ave' . $perfInd->cid] == null ? null : $data['ratee_ave' . $perfInd->cid];
+                $indicatorsAveExist->rater_ave = $data['rater_ave' . $perfInd->cid] == null ? null : $data['rater_ave' . $perfInd->cid];
+                if ($perfInd->critical_incident == 1) {
+                    $indicatorsAveExist->critical_incident = $data['critical_incident' . $perfInd->cid] == null ? '' : $data['critical_incident' . $perfInd->cid];
+                }
+                $indicatorsAveExist->save();
+            } else {
+                $indicatorsAve = new perf_indicatorsAve();
+                $indicatorsAve->ind_cid = $perfInd->cid;
+                $indicatorsAve->perf_cid = $data['performance_cid'];
+                $indicatorsAve->ratee_ave = $data['ratee_ave' . $perfInd->cid] == null ? null : $data['ratee_ave' . $perfInd->cid];
+                $indicatorsAve->rater_ave = $data['rater_ave' . $perfInd->cid] == null ? null : $data['rater_ave' . $perfInd->cid];
+                if ($perfInd->critical_incident == 1) {
+                    $indicatorsAve->critical_incident = $data['critical_incident' . $perfInd->cid] == null ? '' : $data['critical_incident' . $perfInd->cid];
+                }
+                $indicatorsAve->save();
+            }
+            foreach ($perfInd->evaluation as $eval) {
+                $ratingsExist = ratings::where('perf_cid', $data['performance_cid'])->where('eval_cid', $eval->cid)->first();
+
+                if ($ratingsExist) {
+                    $ratingsExist->ratee_rate = $data['ratee' . $eval->cid] == null ? null : $data['ratee' . $eval->cid];
+                    $ratingsExist->rater_rate = $data['rater' . $eval->cid] == null ? null : $data['rater' . $eval->cid];
                     if ($eval->remarks == 1) {
-                        $ratings->remarks = ($data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid]);
+                        $ratingsExist->remarks = $data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid];
                     }
-                    $ratings->save();
+                    $ratingsExist->save();
+
+                } else {
+                    $new_ratings = new ratings();
+                    $new_ratings->perf_cid = $data['performance_cid'];
+                    $new_ratings->eval_cid = $eval->cid;
+                    $new_ratings->ratee_rate = $data['ratee' . $eval->cid] == null ? null : $data['ratee' . $eval->cid];
+                    $new_ratings->rater_rate = $data['rater' . $eval->cid] == null ? null : $data['rater' . $eval->cid];
+                    if ($eval->remarks == 1) {
+                        $new_ratings->remarks = $data['remarks' . $eval->cid] == null ? '' : $data['remarks' . $eval->cid];
+                    }
+                    $new_ratings->save();
 
                 }
             }
         }
     }
-
-
 }
 
 

@@ -13,7 +13,7 @@
 
                     <form action="{{ route('save-ratings') }}" method="POST">
                         {{ csrf_field() }}
-                        <input type="text" value="{{ $performance_cid }}" name="performance_cid">
+                        <input type="hidden" value="{{ $performance_cid }}" name="performance_cid">
                         <table class="table  table-striped table-bordered">
                             @foreach ($performance->indicators->sortBy('ord') as $indicator)
                                 <thead>
@@ -49,7 +49,8 @@
                                         <td>
                                             @if ($indicator->critical_incident == 1)
                                                 <label for="">Critical Incident:</label> <br>
-                                                <textarea name="critical_incident" id="" cols="70" rows="2" class="form-control"> </textarea>
+                                                <textarea name="critical_incident{{ $evaluation->ind_cid }}" id="" cols="70" rows="2"
+                                                    class="form-control"> </textarea>
                                             @endif
                                         </td>
                                         <td colspan='2'>
@@ -62,11 +63,11 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <input type="number" class="form-control" ste="any"
-                                                        name="ratee_ave{{ $evaluation->ind_cid }}" disabled>
+                                                        name="ratee_ave{{ $evaluation->ind_cid }}">
                                                 </div>
                                                 <div class="col">
                                                     <input type="number" class="form-control" ste="any"
-                                                        name="rater_ave{{ $evaluation->ind_cid }}" disabled>
+                                                        name="rater_ave{{ $evaluation->ind_cid }}">
                                                 </div>
                                             </div>
                                         </td>
