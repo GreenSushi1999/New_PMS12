@@ -13,7 +13,7 @@ use App\Http\Controllers\PerformanceController;
 |
 */
 
-Route::get('/index', 'PerformanceController@index');
+Route::get('/', 'PerformanceController@index');
 Route::post('/move-info', 'PerformanceController@move_info')->name('move-info');
 Route::post('/save-info', 'PerformanceController@save_info')->name('save-info');
 Route::post('/values', 'PerformanceController@values')->name('values');

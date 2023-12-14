@@ -26,31 +26,68 @@
                                 <tbody>
                                     @foreach ($indicator->evaluation->sortBy('ord') as $evaluation)
                                         <tr>
+                                            @php
+                                                $ratee_rate = null;
+                                                $rater_rate = null;
+                                                $remarks = null;
+
+                                            @endphp
+
+                                            @foreach ($performance->ratings as $per_rate)
+                                                @if ($per_rate->eval_cid == $evaluation->cid)
+                                                    @php
+                                                        $ratee_rate = $per_rate->ratee_rate;
+                                                        $rater_rate = $per_rate->rater_rate;
+                                                        $remarks = $per_rate->remarks;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+
                                             <td>{{ $evaluation->criteria }} <br>
                                                 @if ($evaluation->remarks == 1)
                                                     <label for="">Remarks</label> <br>
-                                                    <textarea id="" cols="70" rows="2" class="form-control" name="remarks{{ $evaluation->cid }}"> </textarea>
+                                                    <textarea id="" cols="70" rows="2" class="form-control" name="remarks{{ $evaluation->cid }}">{{ $remarks }}  </textarea>
                                                 @endif
                                             </td>
                                             <td class="col-lg-1">
                                                 <input type="number" min="71" max="100"
                                                     class="form-control ratee{{ $evaluation->ind_cid }}"
                                                     name="ratee{{ $evaluation->cid }}"
-                                                    onchange="updateRateeSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }})">
+                                                    onchange="updateRateeSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }})"
+                                                    value="{{ $ratee_rate }}">
                                             </td>
                                             <td class="col-lg-1"> <input type="number" min="71" max="100"
                                                     class="form-control rater{{ $evaluation->ind_cid }}"
                                                     name="rater{{ $evaluation->cid }}"
-                                                    onchange="updateRaterSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }})">
+                                                    onchange="updateRaterSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }}) "
+                                                    value="{{ $rater_rate }}"
+                                                    @if ($performance->ratee_cid == 23014) readonly @endif>
                                             </td>
                                         </tr>
                                     @endforeach
+
+
                                     <tr>
                                         <td>
+                                            @php
+                                                $evaluationRateeAve = null;
+                                                $evaluationRaterAve = null;
+                                                $evaluationCriticalIncident = null;
+                                            @endphp
+
+                                            @foreach ($performance->perf_indicatorsAve as $perfAve)
+                                                @if ($perfAve->ind_cid == $evaluation->ind_cid)
+                                                    @php
+                                                        $evaluationRateeAve = $perfAve->ratee_ave;
+                                                        $evaluationRaterAve = $perfAve->rater_ave;
+                                                        $evaluationCriticalIncident = $perfAve->critical_incident;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
                                             @if ($indicator->critical_incident == 1)
                                                 <label for="">Critical Incident:</label> <br>
                                                 <textarea name="critical_incident{{ $evaluation->ind_cid }}" id="" cols="70" rows="2"
-                                                    class="form-control"> </textarea>
+                                                    class="form-control"> {{ $evaluationCriticalIncident }}</textarea>
                                             @endif
                                         </td>
                                         <td colspan='2'>
@@ -60,18 +97,29 @@
                                                     {{ $evaluation->indicators->percentage / 100 }}</label>
                                             </div>
 
+
+
                                             <div class="row">
                                                 <div class="col">
-                                                    <input type="number" class="form-control" ste="any"
-                                                        name="ratee_ave{{ $evaluation->ind_cid }}">
+
+
+                                                    <input type="number" class="form-control" step="any"
+                                                        name="ratee_ave{{ $evaluation->ind_cid }}"
+                                                        value="{{ $evaluationRateeAve }}" readonly>
+
                                                 </div>
                                                 <div class="col">
-                                                    <input type="number" class="form-control" ste="any"
-                                                        name="rater_ave{{ $evaluation->ind_cid }}">
+
+
+                                                    <input type="number" class="form-control" step="any"
+                                                        name="rater_ave{{ $evaluation->ind_cid }}"
+                                                        value="{{ $evaluationRaterAve }}" readonly>
                                                 </div>
                                             </div>
                                         </td>
+
                                     </tr>
+
                                 </tbody>
                             @endforeach
                         </table>
@@ -100,7 +148,7 @@
 
         var total = ave * percent;
 
-        document.getElementsByName('ratee_ave' + cid)[0].value = total.toFixed(2)
+        document.getElementsByName('ratee_ave' + cid)[0].value = total.toFixed(2);
     }
 
 

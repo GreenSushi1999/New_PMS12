@@ -17,5 +17,10 @@ class indicators extends Model
     public function document()
     {
         return $this->hasMany('App\document', 'cid', 'doc_cid');
+    } 
+
+    public function perf_indicatorsAve() {
+        return $this->hasOne('App\perf_indicatorsAve','ind_cid','cid');
+
     }
 }

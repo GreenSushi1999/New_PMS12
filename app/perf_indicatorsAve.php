@@ -19,4 +19,5 @@ class perf_indicatorsAve extends Model
     {
         return $this->hasOne('App\indicators', 'cid', 'ind_cid');
     }
+   
 }

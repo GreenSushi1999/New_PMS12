@@ -21,7 +21,7 @@ class performance extends Model
     }
     public function perf_indicatorsAve()
     {
-        return $this->hasOne('App\perf_indicatorsAve', 'perf_cid', 'cid');
+        return $this->hasMany('App\perf_indicatorsAve', 'perf_cid', 'cid');
     }
     public function hr()
     {
@@ -39,7 +39,7 @@ class performance extends Model
 
     public function ratings()
     {
-        return $this->hasMany('App\performance', 'perf_cid', 'cid');
+        return $this->hasMany('App\ratings', 'perf_cid', 'cid');
     }
 
 }
