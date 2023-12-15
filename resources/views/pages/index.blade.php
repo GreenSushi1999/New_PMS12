@@ -56,13 +56,13 @@
                      </div>
                      <div class="mb-3">
                          <label for="department" class="form-label">Department:</label>
-                         {{-- <select class="form-select" id="department" name="department" aria-label="Select input"
+                         <select class="form-select" id="department" name="department" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
                              @foreach ($HRS->unique('DeptName') as $HR)
                                  <option value="{{ $HR->Dept_ID }}">{{ $HR->DeptName }}</option>
                              @endforeach
-                         </select> --}}
+                         </select>
                      </div>
                      <div class="mb-3">
                          <label for="period_covered" class="form-label">Period Covered:</label>
@@ -71,33 +71,33 @@
                      </div>
                      <div class="mb-3">
                          <label for="rater" class="form-label">Rater:</label>
-                         {{-- <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
+                         <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
                              @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
                              @endforeach
-                         </select> --}}
+                         </select>
                      </div>
                      <div class="mb-3">
                          <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR :</label>
-                         {{-- <select class="form-select select2" id="director" name="director" aria-label="Select input"
+                         <select class="form-select select2" id="director" name="director" aria-label="Select input"
                              required>
                              <option selected disabled>Select an option</option>
                              @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
                              @endforeach
-                         </select> --}}
+                         </select>
                      </div>
                      <div class="mb-3">
                          <label for="op" class="form-label">OP / VPFA / VPAR:</label>
-                         {{-- <select class="form-select select2" id="op" name="op" aria-label="Select input"
+                         <select class="form-select select2" id="op" name="op" aria-label="Select input"
                              required>
                              <option selected disabled>Select an option</option>
                              @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
                              @endforeach
-                         </select> --}}
+                         </select>
                      </div>
              </div>
              <div class="modal-footer">
@@ -110,7 +110,8 @@
  </div>
 
  {{-- rater modal --}}
- <div class="modal fade modal-lg" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel" aria-hidden="true">
+ <div class="modal fade modal-lg" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel"
+     aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
              <div class="modal-header">
@@ -120,7 +121,7 @@
              <div class="modal-body">
                  @foreach ($performance as $perform)
                      <div class="card bg-success p-2">
-                         {{-- <p class="text-white"> {{ $perform->hr->Name }}</p> --}}
+                         <p class="text-white"> {{ $perform->hr->Name }}</p>
                          <p class="text-white">{{ $perform->document->doc_name }}</p>
 
                      </div>

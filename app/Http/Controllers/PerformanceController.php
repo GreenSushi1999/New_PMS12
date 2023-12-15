@@ -18,33 +18,33 @@ class PerformanceController extends Controller
         // $rater_empNo = Auth::user()->EmpNo;
         $rater_empNo = 23014;
         $documents = document::get();
-        // $HRS = hr::get();
+        $HRS = hr::get();
         $performance = performance::where('rater_cid', $rater_empNo)->get();
-        return view('pages.index', compact('documents', 'performance'));
+        return view('pages.index', compact('HRS', 'documents', 'performance'));
     }
     public function save_info(Request $request)
     {
         $data = $request->all();
-        // $ratee_cid = Auth::user()->EmpNo;
+
         $ratee_cid = 23014;
-        $rater_cid = 23014;
-        // $rater_cid = $data['rater'];
-        // $director_cid = $data['director'];
-        // $op_cid = $data['op'];
+        // $rater_cid = 23014;
+        $rater_cid = $data['rater'];
+        $director_cid = $data['director'];
+        $op_cid = $data['op'];
         $position = $data['position'];
         $period_covered = $data['period_covered'];
-        // $department = $data['department'];
+        $department = $data['department'];
         $doc_type = $data['doc_type'];
 
 
         $performance = new performance();
         $performance->ratee_cid = $ratee_cid;
         $performance->rater_cid = $rater_cid;
-        // $performance->director_cid = $director_cid;
-        // $performance->op_cid = $op_cid;
+        $performance->director_cid = $director_cid;
+        $performance->op_cid = $op_cid;
         $performance->position = $position;
         $performance->period_cover = $period_covered;
-        // $performance->department = $department;
+        $performance->department = $department;
         $performance->doc_type = $doc_type;
         $performance->save();
 
@@ -71,7 +71,7 @@ class PerformanceController extends Controller
     {
 
         $performance = performance::where('cid', $performance_cid)->first();
-        
+
         return view('pages.values_indicator', compact('performance', 'performance_cid', 'ratee_cid'));
     }
 
