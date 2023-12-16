@@ -11,5 +11,7 @@ class achievement extends Model
     protected $table = 'tblachievement';
     public $timestamps = true;
 
+    protected $fillable = ['perf_cid', 'achievement']; 
+    protected $guarded = ['cid'];  
 
 }

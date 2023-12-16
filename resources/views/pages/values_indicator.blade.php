@@ -126,7 +126,7 @@
 
                 </div>
                 <div class="card-footer d-flex justify-content-end">
-                    <button class="btn btn-success" type="submit">Next</button>
+                    <button class="btn btn-success m-2" type="submit">Next</button>
                 </div>
                 </form>
             </div>
