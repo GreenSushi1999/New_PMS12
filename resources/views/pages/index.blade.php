@@ -24,7 +24,46 @@
      </div>
  </div>
  {{-- ratee modal --}}
+
+
+
  <div class="modal fade" id="ratee_modal" tabindex="-1" aria-labelledby="rateeModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Ratee Modal</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+
+                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#rateeForm_modal"
+                     id="newForm">New
+                     Form</button>
+
+
+                 @foreach ($performance as $perform)
+                     <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
+                         style="text-decoration: none;">
+                         <div class="card bg-success p-2 submit-form">
+
+                             <p class="text-white"> {{ $perform->hr->Name }}</p>
+                             <p class="text-white">{{ $perform->document->doc_name }}</p>
+                         </div>
+                     </a>
+                 @endforeach
+
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 <button type="submit" class="btn btn-primary">Save changes</button>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <div class="modal fade" id="rateeForm_modal" tabindex="-1" aria-labelledby="rateeFormModalLabel" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
              <div class="modal-header">
@@ -59,9 +98,9 @@
                          <select class="form-select" id="department" name="department" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
-                             {{-- @foreach ($HRS->unique('DeptName') as $HR)
+                             @foreach ($HRS->unique('DeptName') as $HR)
                                  <option value="{{ $HR->Dept_ID }}">{{ $HR->DeptName }}</option>
-                             @endforeach --}}
+                             @endforeach
                          </select>
                      </div>
                      <div class="mb-3">
@@ -74,19 +113,19 @@
                          <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
-                             {{-- @foreach ($HRS->unique('Name') as $HR)
+                             @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
-                             @endforeach --}}
+                             @endforeach
                          </select>
                      </div>
                      <div class="mb-3">
                          <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR :</label>
-                         <select class="form-select select2" id="director" name="director" aria-label="Select input"
-                             required>
+                         <select class="form-select select2" id="director" name="director"
+                             aria-label="Select input" required>
                              <option selected disabled>Select an option</option>
-                             {{-- @foreach ($HRS->unique('Name') as $HR)
+                             @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
-                             @endforeach --}}
+                             @endforeach
                          </select>
                      </div>
                      <div class="mb-3">
@@ -94,9 +133,9 @@
                          <select class="form-select select2" id="op" name="op" aria-label="Select input"
                              required>
                              <option selected disabled>Select an option</option>
-                             {{-- @foreach ($HRS->unique('Name') as $HR)
+                             @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
-                             @endforeach --}}
+                             @endforeach
                          </select>
                      </div>
              </div>
@@ -109,19 +148,20 @@
      </div>
  </div>
 
- {{-- rater modal --}}
- <div class="modal fade modal-lg" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel"
-     aria-hidden="true">
+
+
+
+ <div class="modal fade" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                 <h5 class="modal-title" id="exampleModalLabel">Rater Modal</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
                  @foreach ($performance as $perform)
                      <div class="card bg-success p-2">
-                         {{-- <p class="text-white"> {{ $perform->hr->Name }}</p> --}}
+                         <p class="text-white"> {{ $perform->hr->Name }}</p>
                          <p class="text-white">{{ $perform->document->doc_name }}</p>
 
                      </div>
@@ -129,7 +169,8 @@
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                 <button type="button" class="btn btn-primary">Save changes</button>
+                 <button type="submit" class="btn btn-primary">Save changes</button>
+                 </form>
              </div>
          </div>
      </div>
@@ -140,6 +181,10 @@
      <script>
          $(document).ready(function() {
              $('.js-example-basic-single').select2();
+
+             $('#newForm').on('click', function() {
+                 $('#ratee_modal').modal('hide');
+             });
          });
      </script>
  @endsection

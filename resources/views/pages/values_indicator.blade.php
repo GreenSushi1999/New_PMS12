@@ -126,6 +126,8 @@
 
                 </div>
                 <div class="card-footer d-flex justify-content-end">
+                    <a href="/instruction/{{ $performance->cid }}/{{ $performance->ratee_cid }}"
+                        class="btn btn-success m-2">Back</a>
                     <button class="btn btn-success m-2" type="submit">Next</button>
                 </div>
                 </form>

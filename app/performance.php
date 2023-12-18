@@ -19,8 +19,10 @@ class performance extends Model
     {
         return $this->hasMany('App\recommendation', 'perf_cid', 'cid');
     }
-
-    
+    public function perf_agreement()
+    {
+        return $this->hasMany('App\perf_agreement', 'perf_cid', 'cid');
+    }
     public function perf_indicatorsAve()
     {
         return $this->hasMany('App\perf_indicatorsAve', 'perf_cid', 'cid');
@@ -43,6 +45,6 @@ class performance extends Model
     {
         return $this->hasMany('App\ratings', 'perf_cid', 'cid');
     }
-  
+
 
 }

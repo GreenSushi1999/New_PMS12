@@ -42,8 +42,9 @@
                 <div class="card-footer d-flex justify-content-end">
                     <form action="{{ route('values') }}" method="POST">
                         {{ csrf_field() }}
-                        <input type="text" name="performance_cid" value="{{ $performance_cid }}">
-                        <input type="text" name="ratee_cid" value="{{ $ratee_cid }}">
+                        <input type="hidden" name="performance_cid" value="{{ $performance_cid }}">
+                        <input type="hidden" name="ratee_cid" value="{{ $ratee_cid }}">
+                        <a href="/" class="btn btn-success">Back</a>
                         <button class="btn btn-primary" type="submit">Start</button>
                     </form>
                 </div>

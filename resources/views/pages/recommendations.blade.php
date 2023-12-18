@@ -48,6 +48,10 @@
                     </table>
                 </div>
                 <div class="card-footer d-flex justify-content-end">
+                    <a href="/achievements/{{ $performance->cid }}/{{ $performance->ratee_cid }}"
+                        class="btn btn-success m-2">Back</a>
+
+
                     <button class="btn btn-success m-2" id="addRecommendation" type="button" data-bs-toggle="modal"
                         data-bs-target="#addRecommendation_modal">Add New</button>
                     <button class="btn btn-primary m-2" id="updateBtn" class="submit">Next</button>
