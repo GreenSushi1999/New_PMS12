@@ -1,6 +1,5 @@
 <?php
-
-use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +11,7 @@ use App\Http\Controllers\PerformanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', 'PerformanceController@index');
 Route::post('/access-performance', 'PerformanceController@access_performacne')->name('access-performance');
@@ -33,3 +33,6 @@ Route::post('/delete-recommendation', 'PerformanceController@delete_recommendati
 Route::post('/update-recommendation', 'PerformanceController@update_recommendation')->name('update-recommendation');
 Route::get('/agreement/{performance_cid}/{ratee_cid}', 'PerformanceController@agreement');
 Route::post('/save-performance-agreement', 'PerformanceController@save_perfagreement')->name('save-perf_agreement');
+
+
+

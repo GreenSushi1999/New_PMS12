@@ -7,23 +7,27 @@ use App\grade;
 use App\ratings;
 use App\document;
 use App\agreement;
+use App\employees;
 use App\indicators;
 use App\achievement;
 use App\performance;
+use App\perf_agreement;
 use App\recommendation;
 use App\perf_indicatorsAve;
-use App\perf_agreement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PerformanceController extends Controller
 {
+
     public function index()
     {
+
         // $rater_empNo = Auth::user()->EmpNo;
         $rater_empNo = 23014;
         $documents = document::get();
         $HRS = hr::get();
-        $performance = performance::where('rater_cid', $rater_empNo)->get();
+        $performance = performance::where('ratee_cid', $rater_empNo)->get();
         return view('pages.index', compact('HRS', 'documents', 'performance'));
     }
     public function save_info(Request $request)
@@ -324,7 +328,6 @@ class PerformanceController extends Controller
                 perf_agreement::where(['perf_cid' => $performance->cid, 'agr_cid' => $cid])->update(['tick' => $tick]);
             }
         }
-
         return back();
     }
 

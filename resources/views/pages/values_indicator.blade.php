@@ -151,7 +151,12 @@
         var total = ave * percent;
 
         document.getElementsByName('ratee_ave' + cid)[0].value = total.toFixed(2);
+
+
+
     }
+
+
 
 
     function updateRaterSum(cid, percentage) {

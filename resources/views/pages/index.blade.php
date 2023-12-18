@@ -25,8 +25,6 @@
  </div>
  {{-- ratee modal --}}
 
-
-
  <div class="modal fade" id="ratee_modal" tabindex="-1" aria-labelledby="rateeModalLabel" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
@@ -39,7 +37,6 @@
                  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#rateeForm_modal"
                      id="newForm">New
                      Form</button>
-
 
                  @foreach ($performance as $perform)
                      <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
@@ -56,8 +53,7 @@
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                 <button type="submit" class="btn btn-primary">Save changes</button>
-                 </form>
+
              </div>
          </div>
      </div>
@@ -149,8 +145,6 @@
  </div>
 
 
-
-
  <div class="modal fade" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content">
@@ -159,18 +153,21 @@
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                 @foreach ($performance as $perform)
-                     <div class="card bg-success p-2">
-                         <p class="text-white"> {{ $perform->hr->Name }}</p>
-                         <p class="text-white">{{ $perform->document->doc_name }}</p>
 
-                     </div>
+                 @foreach ($performance as $perform)
+                     @if ($perform->rater_cid == 23014)
+                         <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
+                             style="text-decoration: none;">
+                             <div class="card bg-success p-2">
+                                 <p class="text-white"> {{ $perform->hr->Name }}</p>
+                                 <p class="text-white">{{ $perform->document->doc_name }}</p>
+                             </div>
+                         </a>
+                     @endif
                  @endforeach
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                 <button type="submit" class="btn btn-primary">Save changes</button>
-                 </form>
              </div>
          </div>
      </div>
