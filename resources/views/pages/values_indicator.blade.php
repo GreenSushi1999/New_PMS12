@@ -252,8 +252,6 @@
     function submitForm() {
         var form = document.getElementById("performanceForm");
         var formData = new FormData(form);
-
-
         var xhr = new XMLHttpRequest();
         xhr.open("POST", form.action, true);
         xhr.onreadystatechange = function() {
@@ -262,7 +260,6 @@
 
                     console.log(xhr.responseText);
                 } else {
-
                     console.error("Error submitting form: " + xhr.status);
                 }
             }
