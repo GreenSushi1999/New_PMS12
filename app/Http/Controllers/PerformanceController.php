@@ -16,14 +16,41 @@ use App\recommendation;
 use App\perf_indicatorsAve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PerformanceController extends Controller
 {
+    public function loginform()
+    {
+        return view('custom_auth.login');
+    }
+
+    public function logout()
+    {
+
+        Session::forget('user');
+
+        return redirect()->route('login')->with('success', 'Logged out successfully');
+    }
+    public function login(Request $request)
+    {
+        $data = $request->all();
+        $employee = employees::where('EmpNo', $data['EmpNo'])->where('Bdate', $data['Bdate'])->first();
+
+        if ($employee) {
+
+            Session::put('user', $employee);
+            return redirect('/index');
+        }
+
+        return back()->with('error', 'Invalid credentials');
+    }
+
 
     public function index()
     {
+        $user = Session::get('user');
 
-        // $rater_empNo = Auth::user()->EmpNo;
         $rater_empNo = 23014;
         $documents = document::get();
         $HRS = hr::get();
