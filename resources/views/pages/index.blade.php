@@ -18,6 +18,11 @@
                          <button class="btn btn-success" data-bs-toggle="modal"
                              data-bs-target="#rater_modal">Rater</button>
                      </div>
+                     <div class="row mt-2">
+
+
+                         <button class="btn btn-info text-white">HCM</button>
+                     </div>
                  </div>
              </div>
          </div>
