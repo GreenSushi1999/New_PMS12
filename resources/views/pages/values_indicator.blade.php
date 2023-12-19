@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="{{ route('save-ratings') }}" method="POST">
+                    <form action="{{ route('save-ratings') }}" method="POST" id="performanceForm">
                         {{ csrf_field() }}
                         <input type="hidden" value="{{ $performance_cid }}" name="performance_cid">
                         <table class="table  table-striped table-bordered">
@@ -54,14 +54,15 @@
                                                     class="form-control ratee{{ $evaluation->ind_cid }}"
                                                     name="ratee{{ $evaluation->cid }}"
                                                     onchange="updateRateeSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }})"
-                                                    value="{{ $ratee_rate }}">
+                                                    value="{{ $ratee_rate }}"
+                                                    @if ($performance->rater_cid == Session::get('user')->EmpNo) readonly @endif>
                                             </td>
                                             <td class="col-lg-1"> <input type="number" min="71" max="100"
                                                     class="form-control rater{{ $evaluation->ind_cid }}"
                                                     name="rater{{ $evaluation->cid }}"
                                                     onchange="updateRaterSum({{ $evaluation->ind_cid }},{{ $evaluation->indicators->percentage }}) "
                                                     value="{{ $rater_rate }}"
-                                                    @if ($performance->ratee_cid == 23014) readonly @endif>
+                                                    @if ($performance->ratee_cid == Session::get('user')->EmpNo) readonly @endif>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -101,8 +102,6 @@
 
                                             <div class="row">
                                                 <div class="col">
-
-
                                                     <input type="number" class="form-control" step="any"
                                                         name="ratee_ave{{ $evaluation->ind_cid }}"
                                                         value="{{ $evaluationRateeAve }}" readonly>
@@ -119,9 +118,31 @@
                                         </td>
 
                                     </tr>
-
-                                </tbody>
                             @endforeach
+                            <tr>
+                                <td>Overall Weighted Average </td>
+                                <td><input type="text" name="ratee_overall_ave" class="form-control"
+                                        value="{{ $performance->ratee_overall_ave }}" readonly></td>
+                                <td><input type="text" name="rater_overall_ave" class="form-control"
+                                        value="{{ $performance->ratee_overall_ave }}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Final Ranking </td>
+                                <td colspan='2'> <input type="text" name="final_ranking" id="final_ranking"
+                                        value="{{ $performance->final_ranking }}" readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>Verbal Interpretation</td>
+                                <td colspan="2" name="verbal_interpretation">
+                                    @foreach ($grade as $g)
+                                        @if ($performance->final_ranking >= $g->grade_min && $performance->final_ranking <= $g->grade_max)
+                                            {{ $g->verbal_interpretation }}
+                                        @endif
+                                    @endforeach
+                                </td>
+
+                            </tr>
+                            </tbody>
                         </table>
 
                 </div>
@@ -152,10 +173,22 @@
 
         document.getElementsByName('ratee_ave' + cid)[0].value = total.toFixed(2);
 
-
-
+        submitForm();
+        calculateOverallRateeAverage();
     }
 
+    function calculateOverallRateeAverage() {
+        var rateeAveInputs = document.querySelectorAll('[name^="ratee_ave"]');
+        var overallSum = 0;
+
+        for (var i = 0; i < rateeAveInputs.length; i++) {
+            overallSum += parseFloat(rateeAveInputs[i].value) || 0;
+        }
+
+        document.getElementsByName('ratee_overall_ave')[0].value = overallSum.toFixed(2);
+        submitForm();
+        calculateFinalRanking()
+    }
 
 
 
@@ -173,6 +206,49 @@
         var total = ave * percent;
 
         document.getElementsByName('rater_ave' + cid)[0].value = total.toFixed(2)
+        submitForm();
+        calculateOverallRaterAverage();
+    }
+
+    function calculateOverallRaterAverage() {
+        var raterAveInputs = document.querySelectorAll('[name^="rater_ave"]');
+        var overallSum = 0;
+
+        for (var i = 0; i < raterAveInputs.length; i++) {
+            overallSum += parseFloat(raterAveInputs[i].value) || 0;
+        }
+
+        document.getElementsByName('rater_overall_ave')[0].value = overallSum.toFixed(2);
+        submitForm();
+        calculateFinalRanking()
+    }
+
+    function calculateFinalRanking() {
+        var ratee_overallAve = parseFloat(document.getElementsByName('ratee_overall_ave')[0].value) || 0;
+        var rater_overallAve = parseFloat(document.getElementsByName('rater_overall_ave')[0].value) || 0;
+
+        var sum = ratee_overallAve + rater_overallAve;
+        var ave = sum / 2;
+        submitForm();
+        document.getElementsByName('final_ranking')[0].value = ave.toFixed(2);
+    }
+
+
+
+    function submitForm() {
+        var form = document.getElementById("performanceForm");
+        var formData = new FormData(form);
+
+        // Use AJAX to submit the form data
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Handle the response if needed
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send(formData);
     }
 </script>
 

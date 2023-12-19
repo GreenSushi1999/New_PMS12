@@ -38,7 +38,6 @@ class PerformanceController extends Controller
         $employee = employees::where('EmpNo', $data['EmpNo'])->where('Bdate', $data['Bdate'])->first();
 
         if ($employee) {
-
             Session::put('user', $employee);
             return redirect('/index');
         }
@@ -49,20 +48,20 @@ class PerformanceController extends Controller
 
     public function index()
     {
-        $user = Session::get('user');
 
-        $rater_empNo = 23014;
+        $user = Session::get('user')->EmpNo;
         $documents = document::get();
         $HRS = hr::get();
-        $performance = performance::where('ratee_cid', $rater_empNo)->get();
-        return view('pages.index', compact('HRS', 'documents', 'performance'));
+        $perf_ratee = performance::where('ratee_cid', $user)->get();
+        $perf_rater = performance::where('rater_cid', $user)->get();
+        return view('pages.index', compact('HRS', 'documents', 'perf_ratee', 'perf_rater'));
     }
     public function save_info(Request $request)
     {
         $data = $request->all();
 
-        $ratee_cid = 23014;
-        // $rater_cid = 23014;
+        $ratee_cid = Session::get('user')->EmpNo;
+
         $rater_cid = $data['rater'];
         $director_cid = $data['director'];
         $op_cid = $data['op'];
@@ -120,8 +119,9 @@ class PerformanceController extends Controller
     {
 
         $performance = performance::where('cid', $performance_cid)->first();
+        $grade = grade::get();
 
-        return view('pages.values_indicator', compact('performance', 'performance_cid', 'ratee_cid'));
+        return view('pages.values_indicator', compact('grade', 'performance', 'performance_cid', 'ratee_cid'));
     }
 
 
@@ -178,6 +178,11 @@ class PerformanceController extends Controller
                 }
             }
         }
+
+        $performance->ratee_overall_ave = $data['ratee_overall_ave'];
+        $performance->rater_overall_ave = $data['rater_overall_ave'];
+        $performance->final_ranking = $data['final_ranking'];
+        $performance->save();
 
         return redirect('achievements/' . $performance->cid . '/' . $performance->ratee_cid);
     }

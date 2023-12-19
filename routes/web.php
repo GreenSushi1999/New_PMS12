@@ -11,10 +11,13 @@ use App\Http\Controllers\AuthController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', 'PerformanceController@loginform');
-Route::post('/login', 'PerformanceController@login')->name('login');
-Route::get('/logout', 'PerformanceController@logout')->name('logout');
+Route::middleware(['web', 'auth.check'])->group(function () {
+    Route::get('/login', 'PerformanceController@loginform');
+    Route::post('/login', 'PerformanceController@login')->name('login');
 
+});
+
+Route::get('/logout', 'PerformanceController@logout')->name('logout');
 
 Route::middleware(['web', 'custom.auth'])->group(function () {
     Route::get('/index', 'PerformanceController@index');

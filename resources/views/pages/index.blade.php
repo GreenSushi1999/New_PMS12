@@ -7,7 +7,7 @@
          <div class="col-md-6">
              <div class="card shadow">
                  <div class="card-header">
-                     <h3 class="card-title">Welcome to Laravel!</h3>
+                     <h3 class="card-title">Performance Management System</h3>
                  </div>
                  <div class="card-body">
                      <div class="row ">
@@ -20,8 +20,10 @@
                      </div>
                      <div class="row mt-2">
 
-
-                         <button class="btn btn-info text-white">HCM</button>
+                         @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
+                             <button class="btn btn-info text-white" data-bs-toggle="modal"
+                                 data-bs-target="#hr_modal">HCM</button>
+                         @endif
                      </div>
                  </div>
              </div>
@@ -43,7 +45,7 @@
                      id="newForm">New
                      Form</button>
 
-                 @foreach ($performance as $perform)
+                 @foreach ($perf_ratee as $perform)
                      <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
                          style="text-decoration: none;">
                          <div class="card bg-success p-2 submit-form">
@@ -159,16 +161,17 @@
              </div>
              <div class="modal-body">
 
-                 @foreach ($performance as $perform)
-                     @if ($perform->rater_cid == 23014)
-                         <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
-                             style="text-decoration: none;">
-                             <div class="card bg-success p-2">
-                                 <p class="text-white"> {{ $perform->hr->Name }}</p>
-                                 <p class="text-white">{{ $perform->document->doc_name }}</p>
-                             </div>
-                         </a>
-                     @endif
+                 @foreach ($perf_rater as $perform)
+                     {{-- @if ($perform->rater_cid == Session::get('user')->EmpNo) --}}
+                     <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
+                         style="text-decoration: none;">
+                         <div class="card bg-success p-2">
+                             <p class="text-white"> {{ $perform->hr->Name }}</p>
+                             <p class="text-white">{{ $perform->document->doc_name }}</p>
+                         </div>
+                     </a>
+
+                     {{-- @endif --}}
                  @endforeach
              </div>
              <div class="modal-footer">

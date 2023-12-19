@@ -15,6 +15,14 @@ class employees extends Model implements AuthenticatableContract
     protected $primaryKey = 'EmpNo';
     protected $table = 'HR.dbo.tblEmployees';
     public $timestamps = false;
+
+
+
+    public function hr()
+    {
+        return $this->hasOne('App\hr', 'EmpNo', 'EmpNo');
+    }
+
 }
 
 
