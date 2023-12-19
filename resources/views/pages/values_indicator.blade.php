@@ -133,7 +133,7 @@
                             </tr>
                             <tr>
                                 <td>Verbal Interpretation</td>
-                                <td colspan="2" name="verbal_interpretation">
+                                <td colspan="2" name="verbal_interpretation" id="verbalInterpretation">
                                     @foreach ($grade as $g)
                                         @if ($performance->final_ranking >= $g->grade_min && $performance->final_ranking <= $g->grade_max)
                                             {{ $g->verbal_interpretation }}
@@ -157,6 +157,8 @@
     </div>
 </div>
 
+
+
 <script>
     function updateRateeSum(cid, percentage) {
         var inputs = document.getElementsByClassName('ratee' + cid);
@@ -172,9 +174,8 @@
         var total = ave * percent;
 
         document.getElementsByName('ratee_ave' + cid)[0].value = total.toFixed(2);
-
-        submitForm();
         calculateOverallRateeAverage();
+        submitForm();
     }
 
     function calculateOverallRateeAverage() {
@@ -186,11 +187,10 @@
         }
 
         document.getElementsByName('ratee_overall_ave')[0].value = overallSum.toFixed(2);
+
+        calculateFinalRanking();
         submitForm();
-        calculateFinalRanking()
     }
-
-
 
     function updateRaterSum(cid, percentage) {
         var inputs = document.getElementsByClassName('rater' + cid);
@@ -205,9 +205,10 @@
 
         var total = ave * percent;
 
-        document.getElementsByName('rater_ave' + cid)[0].value = total.toFixed(2)
-        submitForm();
+        document.getElementsByName('rater_ave' + cid)[0].value = total.toFixed(2);
+
         calculateOverallRaterAverage();
+        submitForm();
     }
 
     function calculateOverallRaterAverage() {
@@ -219,8 +220,9 @@
         }
 
         document.getElementsByName('rater_overall_ave')[0].value = overallSum.toFixed(2);
+
+        calculateFinalRanking();
         submitForm();
-        calculateFinalRanking()
     }
 
     function calculateFinalRanking() {
@@ -229,23 +231,40 @@
 
         var sum = ratee_overallAve + rater_overallAve;
         var ave = sum / 2;
-        submitForm();
+
         document.getElementsByName('final_ranking')[0].value = ave.toFixed(2);
+        submitForm();
+        updateVerbalInterpretation(ave);
+
     }
 
+    function updateVerbalInterpretation(finalRanking) {
 
+        var verbalInterpretationElement = document.getElementById('verbalInterpretation');
+
+        @foreach ($grade as $g)
+            if (finalRanking >= {{ $g->grade_min }} && finalRanking <= {{ $g->grade_max }}) {
+                verbalInterpretationElement.innerHTML = '{{ $g->verbal_interpretation }}';
+            }
+        @endforeach
+    }
 
     function submitForm() {
         var form = document.getElementById("performanceForm");
         var formData = new FormData(form);
 
-        // Use AJAX to submit the form data
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", form.action, true);
         xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Handle the response if needed
-                console.log(xhr.responseText);
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+
+                    console.log(xhr.responseText);
+                } else {
+
+                    console.error("Error submitting form: " + xhr.status);
+                }
             }
         };
         xhr.send(formData);
