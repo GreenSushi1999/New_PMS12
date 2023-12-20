@@ -1,35 +1,39 @@
  @extends('layout.app')
 
  @section('title', 'Performance Management System')
+ @section('content')
 
- <div class="container mt-5">
-     <div class="row justify-content-center align-item-center">
-         <div class="col-md-6">
-             <div class="card shadow">
-                 <div class="card-header">
-                     <h3 class="card-title">Performance Management System</h3>
-                 </div>
-                 <div class="card-body">
-                     <div class="row ">
-                         <button class="btn btn-primary" data-bs-toggle="modal"
-                             data-bs-target="#ratee_modal">Ratee</button>
-                     </div>
-                     <div class="row mt-2">
-                         <button class="btn btn-success" data-bs-toggle="modal"
-                             data-bs-target="#rater_modal">Rater</button>
-                     </div>
-                     <div class="row mt-2">
 
-                         @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
-                             <button class="btn btn-info text-white" data-bs-toggle="modal"
-                                 data-bs-target="#hr_modal">HCM</button>
-                         @endif
+     <div class="container mt-5">
+         <div class="row justify-content-center align-item-center">
+             <div class="col-md-6">
+                 <div class="card shadow">
+                     <div class="card-header">
+                         <h3 class="card-title">Performance Management System</h3>
+                     </div>
+                     <div class="card-body">
+                         <div class="row ">
+                             <button class="btn btn-primary" data-bs-toggle="modal"
+                                 data-bs-target="#ratee_modal">Ratee</button>
+                         </div>
+                         <div class="row mt-2">
+                             <button class="btn btn-success" data-bs-toggle="modal"
+                                 data-bs-target="#rater_modal">Rater</button>
+                         </div>
+                         <div class="row mt-2">
+
+                             @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
+                                 <button class="btn btn-info text-white" data-bs-toggle="modal"
+                                     data-bs-target="#hr_modal">HCM</button>
+                             @endif
+                         </div>
                      </div>
                  </div>
              </div>
          </div>
      </div>
- </div>
+ @endsection
+
  {{-- ratee modal --}}
 
  <div class="modal fade" id="ratee_modal" tabindex="-1" aria-labelledby="rateeModalLabel" aria-hidden="true">
@@ -122,7 +126,8 @@
                          </select>
                      </div>
                      <div class="mb-3">
-                         <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR :</label>
+                         <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR
+                             :</label>
                          <select class="form-select select2" id="director" name="director"
                              aria-label="Select input" required>
                              <option selected disabled>Select an option</option>
@@ -191,7 +196,7 @@
              </div>
              <div class="modal-body">
                  <a href="/edit-pms-tool" class="btn btn-success">Edit Rank and File Level</a>
-                 <a href="/edit-pms-tool" class="btn btn-success">Edit Supervisory/Officer Level</a>
+                 <a href="/edit-pms-tool" class="btn btn-success">Edit Supervisory/Officer</a>
                  <button class="btn btn-primary">View Accomplished Forms</button>
              </div>
              <div class="modal-footer">
@@ -202,15 +207,13 @@
  </div>
 
 
+ <script>
+     $(document).ready(function() {
+         $('.js-example-basic-single').select2();
 
- @section('content')
-     <script>
-         $(document).ready(function() {
-             $('.js-example-basic-single').select2();
-
-             $('#newForm').on('click', function() {
-                 $('#ratee_modal').modal('hide');
-             });
+         $('#newForm').on('click', function() {
+             $('#ratee_modal').modal('hide');
          });
-     </script>
- @endsection
+
+     });
+ </script>
