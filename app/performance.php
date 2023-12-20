@@ -31,6 +31,12 @@ class performance extends Model
     {
         return $this->hasOne('App\hr', 'EmpNo', 'ratee_cid');
     }
+
+    public function rater()
+    {
+        return $this->hasOne('App\hr', 'EmpNo', 'rater_cid');
+    }
+
     public function document()
     {
         return $this->hasOne('App\document', 'cid', 'doc_type');

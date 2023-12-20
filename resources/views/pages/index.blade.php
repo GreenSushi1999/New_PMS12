@@ -6,69 +6,109 @@
 
      <div class="container mt-5">
          <div class="row justify-content-center align-item-center">
-             <div class="col-md-6">
+             <div class="col-md-10  ">
                  <div class="card shadow">
-                     <div class="card-header">
-                         <h3 class="card-title">Performance Management System</h3>
+                     <div class="card-header text-white d-flex align-items-center" style="background: #343A40;">
+                         <h5 class="card-title">Performance Management System</h5>
                      </div>
                      <div class="card-body">
-                         <div class="row ">
-                             <button class="btn btn-primary" data-bs-toggle="modal"
-                                 data-bs-target="#ratee_modal">Ratee</button>
-                         </div>
-                         <div class="row mt-2">
-                             <button class="btn btn-success" data-bs-toggle="modal"
-                                 data-bs-target="#rater_modal">Rater</button>
-                         </div>
-                         <div class="row mt-2">
+                         <nav>
+                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                 <button class="nav-link active" id="nav-ratee-tab" data-bs-toggle="tab"
+                                     data-bs-target="#nav-ratee" type="button" role="tab" aria-controls="nav-ratee"
+                                     aria-selected="true">Ratee</button>
+                                 <button class="nav-link" id="nav-rater-tab" data-bs-toggle="tab"
+                                     data-bs-target="#nav-rater" type="button" role="tab" aria-controls="nav-rater"
+                                     aria-selected="false">Rater</button>
+                                 @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
+                                     <button class="nav-link" id="nav-hcm-tab" data-bs-toggle="tab"
+                                         data-bs-target="#nav-hcm" type="button" role="tab" aria-controls="nav-hcm"
+                                         aria-selected="false">HCM</button>
+                                 @endif
+                             </div>
+                         </nav>
+                         <div class="tab-content" id="nav-tabContent">
+                             <div class="tab-pane fade show active" id="nav-ratee" role="tabpanel"
+                                 aria-labelledby="nav-ratee-tab">
+                                 <div class="m-3">
+                                     <button class="btn btn-success" data-bs-toggle="modal"
+                                         data-bs-target="#rateeForm_modal" id="newForm"> New Form</button>
+                                 </div>
+                                 <div class="card m-3 shadow">
+                                     <div class="card-header bg-success text-white">
+                                         <h6>Ratee Forms</h6>
+                                     </div>
+                                     <div class="card-body ">
+                                         <div class="bg-light p-2"style="height:330px;">
 
-                             @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
-                                 <button class="btn btn-info text-white" data-bs-toggle="modal"
-                                     data-bs-target="#hr_modal">HCM</button>
-                             @endif
+                                             @foreach ($perf_ratee as $perform)
+                                                 <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}">
+
+                                                     <div class="p-2  m-2 bg-success rounded ">
+                                                         <p style="font-size:14px;" class="text-white"># {{ $perform->cid }}
+                                                             -
+                                                             {{ $perform->document->doc_name }}
+
+                                                             <br>
+                                                             Last Updated : {{ $perform->updated_at }}
+                                                         </p>
+
+                                                     </div>
+
+                                                 </a>
+                                             @endforeach
+                                         </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+
+                             <div class="tab-pane fade" id="nav-rater" role="tabpanel" aria-labelledby="nav-rater-tab">
+                                 <div class="m-3">
+                                 </div>
+                                 <div class="card m-3 shadow">
+                                     <div class="card-header bg-success text-white">
+                                         <h6>Rater Forms</h6>
+                                     </div>
+                                     <div class="card-body ">
+                                         <div class="bg-light p-2"style="height:330px;">
+                                             @foreach ($perf_rater as $perform)
+                                                 <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}">
+
+                                                     <div class="p-2 m-2 bg-success rounded ">
+                                                         <p style="font-size:14px;" class="text-white"># {{ $perform->cid }}
+                                                             -
+                                                             {{ $perform->document->doc_name }}
+
+                                                             <br>
+                                                             Last Updated : {{ $perform->updated_at }}
+                                                         </p>
+
+                                                     </div>
+
+                                                 </a>
+                                             @endforeach
+                                         </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+
+
+                             <div class="tab-pane fade" id="nav-hcm" role="tabpanel" aria-labelledby="nav-hcm-tab">
+                             </div>
+
                          </div>
                      </div>
                  </div>
              </div>
          </div>
      </div>
+
  @endsection
 
  {{-- ratee modal --}}
 
- <div class="modal fade" id="ratee_modal" tabindex="-1" aria-labelledby="rateeModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ratee Modal</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-
-                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#rateeForm_modal"
-                     id="newForm">New
-                     Form</button>
-
-                 @foreach ($perf_ratee as $perform)
-                     <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
-                         style="text-decoration: none;">
-                         <div class="card bg-success p-2 submit-form">
-
-                             <p class="text-white"> {{ $perform->hr->Name }}</p>
-                             <p class="text-white">{{ $perform->document->doc_name }}</p>
-                         </div>
-                     </a>
-                 @endforeach
-
-
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-             </div>
-         </div>
-     </div>
- </div>
 
  <div class="modal fade" id="rateeForm_modal" tabindex="-1" aria-labelledby="rateeFormModalLabel" aria-hidden="true">
      <div class="modal-dialog">
@@ -151,56 +191,6 @@
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                  <button type="submit" class="btn btn-primary">Save changes</button>
                  </form>
-             </div>
-         </div>
-     </div>
- </div>
-
-
- <div class="modal fade" id="rater_modal" tabindex="-1" aria-labelledby="raterModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Rater Modal</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-
-                 @foreach ($perf_rater as $perform)
-                     {{-- @if ($perform->rater_cid == Session::get('user')->EmpNo) --}}
-                     <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}"
-                         style="text-decoration: none;">
-                         <div class="card bg-success p-2">
-                             <p class="text-white"> {{ $perform->hr->Name }}</p>
-                             <p class="text-white">{{ $perform->document->doc_name }}</p>
-                         </div>
-                     </a>
-
-                     {{-- @endif --}}
-                 @endforeach
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-             </div>
-         </div>
-     </div>
- </div>
-
-
- <div class="modal fade" id="hr_modal" tabindex="-1" aria-labelledby="hrModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">HR Modal</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-                 <a href="/edit-pms-tool" class="btn btn-success">Edit Rank and File Level</a>
-                 <a href="/edit-pms-tool" class="btn btn-success">Edit Supervisory/Officer</a>
-                 <button class="btn btn-primary">View Accomplished Forms</button>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
              </div>
          </div>
      </div>
