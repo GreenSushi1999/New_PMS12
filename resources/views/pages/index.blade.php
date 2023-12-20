@@ -182,6 +182,27 @@
  </div>
 
 
+ <div class="modal fade" id="hr_modal" tabindex="-1" aria-labelledby="hrModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">HR Modal</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <a href="/edit-pms-tool" class="btn btn-success">Edit Rank and File Level</a>
+                 <a href="/edit-pms-tool" class="btn btn-success">Edit Supervisory/Officer Level</a>
+                 <button class="btn btn-primary">View Accomplished Forms</button>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+             </div>
+         </div>
+     </div>
+ </div>
+
+
+
  @section('content')
      <script>
          $(document).ready(function() {

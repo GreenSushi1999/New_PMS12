@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\hr;
+use DateTime;
 use App\grade;
 use App\ratings;
 use App\document;
@@ -35,7 +36,8 @@ class PerformanceController extends Controller
     public function login(Request $request)
     {
         $data = $request->all();
-        $employee = employees::where('EmpNo', $data['EmpNo'])->where('Bdate', $data['Bdate'])->first();
+        $Bdate = DateTime::createFromFormat('mdY', strval($data['Bdate']))->format('Y-m-d');
+        $employee = employees::where('EmpNo', $data['EmpNo'])->where('Bdate', $Bdate)->first();
 
         if ($employee) {
             Session::put('user', $employee);
