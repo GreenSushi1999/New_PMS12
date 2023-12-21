@@ -31,21 +31,23 @@
                              <div class="tab-pane fade show active" id="nav-ratee" role="tabpanel"
                                  aria-labelledby="nav-ratee-tab">
                                  <div class="m-3">
-                                     <button class="btn btn-primary" data-bs-toggle="modal"
-                                         data-bs-target="#rateeForm_modal" id="newForm"> New Form</button>
+                                     <button class="btn btn-primary text-white" data-bs-toggle="modal"
+                                         data-bs-target="#rateeForm_modal" id="newForm"> New
+                                         Form</button>
                                  </div>
                                  <div class="card m-3 shadow">
-                                     <div class="card-header bg-white text-white">
-                                         <h6 class="text-dark mt-1">Ratee Forms</h6>
+                                     <div class="card-header bg-primary ">
+                                         <h6 class="text-white mt-1">Ratee Forms</h6>
                                      </div>
                                      <div class="card-body ">
-                                         <div class="bg-light p-2"style="height:330px;">
+                                         <div class="p-2"style="height:330px;background:#D6D8DA;overflow:auto;">
 
                                              @foreach ($perf_ratee as $perform)
                                                  <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}">
 
-                                                     <div class="p-2  m-2 bg-primary rounded ">
-                                                         <p style="font-size:14px;" class="text-white"># {{ $perform->cid }}
+                                                     <div class="p-2  m-2 bg-success rounded border border-white">
+                                                         <p style="font-size:14px;" class="text-white">#
+                                                             {{ $perform->cid }}
                                                              -
                                                              {{ $perform->document->doc_name }}
 
@@ -67,16 +69,18 @@
                                  <div class="m-3">
                                  </div>
                                  <div class="card m-3 shadow">
-                                     <div class="card-header bg-success text-white">
-                                         <h6>Rater Forms</h6>
+                                     <div class="card-header  " style="background:#001F3F;">
+                                         <h6 class="text-white">Rater Forms</h6>
                                      </div>
                                      <div class="card-body ">
-                                         <div class="bg-light p-2"style="height:330px;">
+                                         <div class="p-2"style="height:330px;background:#D6D8DA;overflow:auto;">
+
                                              @foreach ($perf_rater as $perform)
                                                  <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}">
 
-                                                     <div class="p-2 m-2 bg-success rounded ">
-                                                         <p style="font-size:14px;" class="text-white"># {{ $perform->cid }}
+                                                     <div class="p-2  m-2 bg-primary rounded border border-white">
+                                                         <p style="font-size:14px;" class="text-white">#
+                                                             {{ $perform->cid }}
                                                              -
                                                              {{ $perform->document->doc_name }}
 
