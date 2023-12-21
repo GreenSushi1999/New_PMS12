@@ -41,5 +41,10 @@ Route::middleware(['web', 'custom.auth'])->group(function () {
     Route::get('/agreement/{performance_cid}/{ratee_cid}', 'PerformanceController@agreement');
     Route::post('/save-performance-agreement', 'PerformanceController@save_perfagreement')->name('save-perf_agreement');
 
+
 });
+
+Route::get('/pms/edit/rank-and-file-level', 'PerformanceController@editRank');
+Route::get('/pms/edit/supervisory-officer-level', 'PerformanceController@editSupervisory');
+
 

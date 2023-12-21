@@ -67,7 +67,7 @@
         background: #fff;
         border: none;
         border-radius: 0;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
@@ -83,9 +83,6 @@
         border-bottom: 1px dashed #ddd;
         margin: 40px 0;
     }
-
-
-
 
     .wrapper {
         display: flex;

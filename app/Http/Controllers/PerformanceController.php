@@ -56,7 +56,8 @@ class PerformanceController extends Controller
         $HRS = hr::get();
         $perf_ratee = performance::where('ratee_cid', $user)->get();
         $perf_rater = performance::where('rater_cid', $user)->get();
-        return view('pages.index', compact('HRS', 'documents', 'perf_ratee', 'perf_rater'));
+        $perf_hr = performance::all();
+        return view('pages.index', compact('HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
     }
     public function save_info(Request $request)
     {
@@ -104,8 +105,12 @@ class PerformanceController extends Controller
 
     public function instruction($performance_cid, $ratee_cid)
     {
-        $grades = grade::get();
-        return view('pages.instruction', compact('grades', 'performance_cid', 'ratee_cid'));
+        $needsImprovement = grade::where('cid', 1)->first();
+        $goodPerformance = grade::where('cid', 2)->first();
+        $satisfactoryPerformance = grade::where('cid', 3)->first();
+        $excellentPerformance = grade::where('cid', 4)->first();
+
+        return view('pages.instruction', compact('needsImprovement', 'goodPerformance', 'satisfactoryPerformance', 'excellentPerformance', 'performance_cid', 'ratee_cid'));
     }
 
     public function values(Request $request)
@@ -363,6 +368,16 @@ class PerformanceController extends Controller
             }
         }
         return back();
+    }
+    public function editRank()
+    {
+        $indicators = indicators::where('doc_cid', 1)->get();
+        return view('pages.editRank', compact('indicators'));
+    }
+    public function editSupervisory()
+    {
+        $indicators = indicators::where('doc_cid', 2)->get();
+        return view('pages.editSupervisory', compact('indicators'));
     }
 
 }

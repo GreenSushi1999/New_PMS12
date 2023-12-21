@@ -15,13 +15,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row ">
-                            <p style="font-size:15px;">This form shall be accomplished at the end of each evaluation period.
+                            <p style="font-size:15px;" class="text-dark">This form shall be accomplished at the end of each
+                                evaluation period.
                                 This
                                 form summarizes
                                 the entire process of performance management and must objectively and honestly reflect the
                                 evaluation based on facts and actual incidents identified through monitoring and coaching.
                             </p>
-                            <p style="font-size:15px;">Write your ratings on the corresponding boxes of each
+                            <p style="font-size:15px;" class="text-dark">Write your ratings on the corresponding boxes of
+                                each
                                 indicator. Use percentage
                                 for your answers.</p>
 
@@ -39,25 +41,28 @@
                                 <div class="row p-2 justify-content-center">
                                     <div class="card col-lg-5 p-0 m-1">
                                         <div class="card-header bg-danger text-center">
-                                            <h6 class="card-title text-white">Needs Improvement <br>
-                                                71% - 79%</h6>
+                                            <h6 class="card-title text-white">{{ $needsImprovement->verbal_interpretation }}
+                                                <br>
+                                                {{ $needsImprovement->grade_min }}% - {{ $needsImprovement->grade_max }}%
+                                            </h6>
                                         </div>
                                         <div class="card-body bg-white p-2 m-1">
-                                            <p style="font-size:15px;"> Seldom exhibits expected behavior. With several
-                                                instances of misbehavior
-                                                beyond threshold.</p>
+                                            <p style="font-size:15px;" class="text-dark">
+                                                {{ $needsImprovement->description }}
+                                            </p>
                                         </div>
                                     </div>
 
                                     <div class="card col-lg-5 p-0 m-1 ">
                                         <div class="card-header bg-info text-center">
-                                            <h6 class="card-title text-white">Good Performance <br>
-                                                71% - 79%</h6>
+                                            <h6 class="card-title text-white">
+                                                {{ $goodPerformance->verbal_interpretation }}<br>
+                                                {{ $goodPerformance->grade_min }}% - {{ $goodPerformance->grade_max }}%
+                                            </h6>
                                         </div>
                                         <div class="card-body bg-white p-2 m-1">
-                                            <p style="font-size:15px;"> Seldom exhibits expected behavior. With several
-                                                instances of misbehavior
-                                                beyond threshold.</p>
+                                            <p style="font-size:15px;" class="text-dark">
+                                                {{ $goodPerformance->description }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -66,25 +71,30 @@
 
                                     <div class="card col-lg-5 p-0 m-1 ">
                                         <div class="card-header bg-success text-center">
-                                            <h6 class="card-title text-white">Satisfactory Performance<br>
-                                                71% - 79%</h6>
+                                            <h6 class="card-title text-white">
+                                                {{ $satisfactoryPerformance->verbal_interpretation }}
+                                                <br>
+                                                {{ $satisfactoryPerformance->grade_min }}% -
+                                                {{ $satisfactoryPerformance->grade_max }}%
+                                            </h6>
                                         </div>
                                         <div class="card-body bg-white p-2 m-1">
-                                            <p style="font-size:15px;"> Seldom exhibits expected behavior. With several
-                                                instances of misbehavior
-                                                beyond threshold.</p>
+                                            <p style="font-size:15px;" class="text-dark">
+                                                {{ $satisfactoryPerformance->description }}</p>
                                         </div>
                                     </div>
 
                                     <div class="card col-lg-5 p-0  m-1">
                                         <div class="card-header bg-primary text-center">
-                                            <h6 class="card-title text-white">Excellent Performance <br>
-                                                71% - 79%</h6>
+                                            <h6 class="card-title text-white">
+                                                {{ $excellentPerformance->verbal_interpretation }}<br>
+                                                {{ $excellentPerformance->grade_min }}% -
+                                                {{ $excellentPerformance->grade_max }}%
+                                            </h6>
                                         </div>
                                         <div class="card-body bg-white p-2 m-1">
-                                            <p style="font-size:15px;"> Seldom exhibits expected behavior. With several
-                                                instances of misbehavior
-                                                beyond threshold.</p>
+                                            <p style="font-size:15px;" class="text-dark">
+                                                {{ $excellentPerformance->description }}</p>
                                         </div>
                                     </div>
                                 </div>
