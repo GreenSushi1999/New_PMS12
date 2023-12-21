@@ -286,10 +286,8 @@
 
 
         <div id="content">
-
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <nav class="navbar navbar-expand-md navbar-light rounded">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="btn btn-primary text-white">
                         <i class="fa fa-bars"></i>
                     </button>
