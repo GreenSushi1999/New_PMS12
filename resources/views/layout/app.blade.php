@@ -210,8 +210,8 @@
 
     <div class="wrapper">
 
-        <nav id="sidebar">
-            <div class="sidebar-header mt-2">
+        <nav id="sidebar" class="bg-primary">
+            <div class="sidebar-header mt-2 bg-primary">
                 <h4>Employee Portal</h4>
             </div>
 
@@ -228,7 +228,7 @@
                 </li>
                 <li>
                     <a href="#" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-cogs mr-2" style="margin-right:10px;font-size:18px;"></i> Admin Request
+                        <i class="fa fa-users mr-2" style="margin-right:10px;font-size:18px;"></i> Admin Request
                     </a>
                 </li>
                 <li class="active">
@@ -250,14 +250,35 @@
 
 
 
-            <div class="bg-white border border-primary d-flex flex-column align-items-center m-4 rounded">
-                <div style="font-weight:bold;" class="text-dark p-2">
+            <div class="bg-white border border-primary d-flex flex-column align-items-center m-4 rounded p-1">
+                <span class="text-dark" style="font-size:12px;font-weight:bold;">
                     {{ Session::get('user')->LastName . ',' . Session::get('user')->FirstName }}
-                </div>
-                <div class="p-2">
-                    <p class="text-muted">Today is {{ now()->format('m/d/Y') }}</p>
-                </div>
+                </span>
+                <span class="text-dark font-weight-bold" style="font-size:12px;">
+                    Today is <strong style="font-weight:bold;color:black;">{{ now()->format('m/d/Y') }}
+                    </strong>
+                </span>
             </div>
+            <div class="border border-white p-2 text-center m-4">
+                <span class="text-white" style="font-size:12px;"> For employee concern please contact: </span>
+                <br>
+                <span class="text-white" style="font-size:12px;">
+                    Human Capital Management
+                    (02)8859-0854
+                    hro@mtc.edu.ph
+                </span>
+            </div>
+
+            <div class="border border-white p-2 text-center m-4">
+                <span class="text-white" style="font-size:12px;">For administration concern please contact: </span>
+                <br>
+                <span class="text-white" style="font-size:12px;">
+                    Administration Office
+                    (02)8859-0801
+                </span>
+            </div>
+
+
 
 
 
