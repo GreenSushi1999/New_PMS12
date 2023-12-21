@@ -8,8 +8,8 @@
          <div class="row justify-content-center align-item-center">
              <div class="col-md-10  ">
                  <div class="card shadow">
-                     <div class="card-header text-white d-flex align-items-center" style="background: #343A40;">
-                         <h5 class="card-title">Performance Management System</h5>
+                     <div class="card-header text-white bg-primary d-flex align-items-center justify-content-center">
+                         <h4 class="card-title mt-2">Performance Management System</h4>
                      </div>
                      <div class="card-body">
                          <nav>
@@ -31,12 +31,12 @@
                              <div class="tab-pane fade show active" id="nav-ratee" role="tabpanel"
                                  aria-labelledby="nav-ratee-tab">
                                  <div class="m-3">
-                                     <button class="btn btn-success" data-bs-toggle="modal"
+                                     <button class="btn btn-primary" data-bs-toggle="modal"
                                          data-bs-target="#rateeForm_modal" id="newForm"> New Form</button>
                                  </div>
                                  <div class="card m-3 shadow">
-                                     <div class="card-header bg-success text-white">
-                                         <h6>Ratee Forms</h6>
+                                     <div class="card-header bg-white text-white">
+                                         <h6 class="text-dark mt-1">Ratee Forms</h6>
                                      </div>
                                      <div class="card-body ">
                                          <div class="bg-light p-2"style="height:330px;">
@@ -44,7 +44,7 @@
                                              @foreach ($perf_ratee as $perform)
                                                  <a href="/instruction/{{ $perform->cid }}/{{ $perform->ratee_cid }}">
 
-                                                     <div class="p-2  m-2 bg-success rounded ">
+                                                     <div class="p-2  m-2 bg-primary rounded ">
                                                          <p style="font-size:14px;" class="text-white"># {{ $perform->cid }}
                                                              -
                                                              {{ $perform->document->doc_name }}
