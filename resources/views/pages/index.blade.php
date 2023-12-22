@@ -16,6 +16,8 @@
                              type="button" role="tab" aria-controls="nav-ratee" aria-selected="true">Ratee</button>
                          <button class="nav-link" id="nav-rater-tab" data-bs-toggle="tab" data-bs-target="#nav-rater"
                              type="button" role="tab" aria-controls="nav-rater" aria-selected="false">Rater</button>
+
+
                          @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
                              <button class="nav-link" id="nav-hcm-tab" data-bs-toggle="tab" data-bs-target="#nav-hcm"
                                  type="button" role="tab" aria-controls="nav-hcm" aria-selected="false">HCM</button>

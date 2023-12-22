@@ -89,8 +89,9 @@
                                                 value="{{ $ind->value }}" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="text" name="critical_incident[{{ $ind->cid }}]"
-                                                value="{{ $ind->critical_incident }}" class="form-control">
+                                            <input type="number" name="critical_incident[{{ $ind->cid }}]"
+                                                value="{{ $ind->critical_incident }}" min="0" max="1"
+                                                class="form-control">
                                         </td>
                                         <td class="col-lg-2">
                                             <input type="number" min="1" class="form-control"
@@ -119,7 +120,7 @@
 
     <div class="modal fade" id="editCriteria_modal" tabindex="-1" aria-labelledby="editCriteriaModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Criteria</h5>
@@ -173,7 +174,7 @@
                         var thead = $('#criteriaTable thead');
                         thead.empty();
                         var headrow =
-                            '<tr><th>Criteria</th><th>Remarks</th><th>Delete</th></tr>';
+                            '<tr><th class="text-center">Criteria</th><th class="col-lg-1 text-center">Remarks</th><th class="col-lg-1 text-center">Delete</th></tr>';
                         thead.append(headrow);
                         var tbody = $('#criteriaTable tbody');
                         tbody.empty();
@@ -181,12 +182,17 @@
                         for (var i = 0; i < response.length; i++) {
                             var criteria = response[i].criteria;
                             var remarks = response[i].remarks;
-                            var row = '<tr><td>' + criteria +
-                                '</td><td ><input type="number" class="form-control col-lg-1" name="remarks[' +
-                                response[i].cid + ']" value="' + remarks +
-                                '"</td><td>' +
+                            var row = '<tr>' +
+                                '<td><input type="text" class="form-control col-lg-4" name="criteria[' +
+                                response[i].cid +
+                                ']" value="' + criteria + '"></td>' +
+                                '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="remarks[' +
+                                response[i].cid + ']" value="' + remarks + '"></td>' +
+                                '<td>' +
                                 '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
-                                '</td></tr>';
+                                '</td>' +
+                                '</tr>';
+
                             tbody.append(row);
                         }
                     },
