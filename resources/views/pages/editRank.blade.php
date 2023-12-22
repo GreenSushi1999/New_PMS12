@@ -72,7 +72,7 @@
                             {{ csrf_field() }}
                             <thead>
                                 <tr>
-                                    <th class="text-center"> Values
+                                    <th class="text-center "> Values
                                     </th>
                                     <th class="text-center col-lg-1">Critical <br> Incident</th>
                                     <th class="text-center">Percentage</th>
