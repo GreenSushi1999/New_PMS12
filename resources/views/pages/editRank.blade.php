@@ -132,7 +132,7 @@
                         @endforeach
                     </select>
 
-                    <table id="criteriaTable" class="table table-bordered">
+                    <table id="criteriaTable" class="table table-bordered mt-2">
                         <thead></thead>
                         <tbody>
                         </tbody>
@@ -164,15 +164,19 @@
                     success: function(response) {
                         // Update the table body with the received criteria and remarks
                         var thead = $('#criteriaTable thead');
-
+                        thead.empty();
+                        var headrow =
+                            '<tr><th>Criteria</th><th>Remarks</th><th>Delete</th></tr>';
+                        thead.append(headrow);
                         var tbody = $('#criteriaTable tbody');
                         tbody.empty();
 
                         for (var i = 0; i < response.length; i++) {
                             var criteria = response[i].criteria;
                             var remarks = response[i].remarks;
-                            var row = '<tr><td>' + criteria + '</td><td>' + remarks +
-                                '</td><td>' +
+                            var row = '<tr><td>' + criteria +
+                                '</td><td><input type="number" value="' + remarks +
+                                '"</td><td>' +
                                 '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
                                 '</td></tr>';
                             tbody.append(row);
