@@ -59,7 +59,7 @@
 
 
     <div class="modal fade" id="editValues_modal" tabindex="-1" aria-labelledby="editValuesModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Values</h5>
@@ -72,11 +72,11 @@
                             {{ csrf_field() }}
                             <thead>
                                 <tr>
-
-                                    <th> Values
+                                    <th class="text-center"> Values
                                     </th>
-                                    <th>Percentage</th>
-                                    <th>Delete</th>
+                                    <th class="text-center col-lg-1">Critical <br> Incident</th>
+                                    <th class="text-center">Percentage</th>
+                                    <th class="text-center col-lg-1">Delete</th>
                                 </tr>
                             </thead>
                             <tbody class="sortable-table">
@@ -86,7 +86,11 @@
                                         <input type="hidden" name="order[]" value="{{ $ind->cid }}">
                                         <td>
                                             <input type="text" name="value[{{ $ind->cid }}]"
-                                                value="{{ $ind->value }}">
+                                                value="{{ $ind->value }}" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="critical_incident[{{ $ind->cid }}]"
+                                                value="{{ $ind->critical_incident }}" class="form-control">
                                         </td>
                                         <td class="col-lg-2">
                                             <input type="number" min="1" class="form-control"
@@ -132,11 +136,14 @@
                         @endforeach
                     </select>
 
-                    <table id="criteriaTable" class="table table-bordered mt-2">
-                        <thead></thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <form action="{{ route('edit-criteria') }}" method="POST">
+                        {{ csrf_field() }}
+                        <table id="criteriaTable" class="table table-bordered mt-2">
+                            <thead></thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -175,7 +182,8 @@
                             var criteria = response[i].criteria;
                             var remarks = response[i].remarks;
                             var row = '<tr><td>' + criteria +
-                                '</td><td><input type="number" value="' + remarks +
+                                '</td><td ><input type="number" class="form-control col-lg-1" name="remarks[' +
+                                response[i].cid + ']" value="' + remarks +
                                 '"</td><td>' +
                                 '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
                                 '</td></tr>';

@@ -49,3 +49,4 @@ Route::get('/pms/edit/rank-and-file-level', 'PerformanceController@editRank');
 Route::get('/pms/edit/supervisory-officer-level', 'PerformanceController@editSupervisory');
 Route::post('/edit-values', 'PerformanceController@edit_values')->name('edit-values');
 Route::get('/get-criteria', 'PerformanceController@getCriteria')->name('get-criteria');
+Route::post('/edit-criteria', 'PerformanceController@edit_criteria')->name('edit-criteria');

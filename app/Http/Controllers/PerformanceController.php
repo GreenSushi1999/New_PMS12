@@ -399,9 +399,21 @@ class PerformanceController extends Controller
     {
         $indicatorId = $request->input('indicator');
 
-        $evaluationData = evaluation::where('ind_cid', $indicatorId)->get(['criteria', 'remarks']);
+        $evaluationData = evaluation::where('ind_cid', $indicatorId)->get(['cid', 'criteria', 'remarks']);
 
         return response()->json($evaluationData);
+    }
+    public function edit_criteria(Request $request)
+    {
+        $data = $request->all();
+        $remarks = $request->input('remarks');
+
+        foreach ($remarks as $cid => $remark) {
+            evaluation::where('cid', $cid)->update(['remarks' => $remark]);
+        }
+
+        // Optionally, you can add a response, redirect, or any other logic here
+        return back();
     }
 
 }
