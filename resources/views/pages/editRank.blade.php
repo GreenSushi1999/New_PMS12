@@ -2,6 +2,11 @@
 
 @section('title', 'Performance Management System')
 @section('content')
+    <!-- Add these CDN links to your HTML file -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <div class="container mt-5">
         <div class="row justify-content-center align-item-center">
             <div class="col-md-10">
@@ -63,30 +68,38 @@
                 <div class="modal-body">
                     <button class="btn btn-success">Add new</button>
                     <table class="table table-bordered mt-2">
-                        <thead>
-                            <tr>
-                                <th>Order</th>
-                                <th> Values
-                                </th>
-
-                                <th>Percentage</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($indicators as $ind)
+                        <form action="{{ route('edit-values') }}" method="POST">
+                            {{ csrf_field() }}
+                            <thead>
                                 <tr>
-                                    <td class="col-lg-2"><input type="number" min="1" class="form-control"
-                                            value="{{ $ind->ord }}"></td>
-                                    <td> {{ $ind->value }}
-                                    </td>
 
-                                    <td class="col-lg-2"><input type="number" min="1" class="form-control"
-                                            value="{{ $ind->percentage }}"></td>
-                                    <td><button class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                                    <th> Values
+                                    </th>
+                                    <th>Percentage</th>
+                                    <th>Delete</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
+                            </thead>
+                            <tbody class="sortable-table">
+
+                                @foreach ($indicators as $index => $ind)
+                                    <tr>
+                                        <input type="hidden" name="order[]" value="{{ $ind->cid }}">
+                                        <td>
+                                            <input type="text" name="value[{{ $ind->cid }}]"
+                                                value="{{ $ind->value }}">
+                                        </td>
+                                        <td class="col-lg-2">
+                                            <input type="number" min="1" class="form-control"
+                                                name="percentage[{{ $ind->cid }}]" value="{{ $ind->percentage }}">
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+
 
                     </table>
 
@@ -105,39 +118,25 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Values</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Criteria</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <button class="btn btn-success">Add new</button>
-                    <table class="table table-bordered mt-2">
-                        <thead>
-                            <tr>
-                                <th>Order</th>
-                                <th> Values
-                                </th>
+                    {{-- <form action="{{ route('edit-criteria') }}" method="POST"> --}}
+                    {{-- {{ csrf_field() }} --}}
 
-                                <th>Percentage</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
+                    <select name="value" id="indicatorSelect" class="select2 form-select">
+                        <option value="" disabled selected>Select</option>
+                        @foreach ($indicators as $ind)
+                            <option value="{{ $ind->cid }}">{{ $ind->value }}</option>
+                        @endforeach
+                    </select>
+
+                    <table id="criteriaTable" class="table table-bordered">
+                        <thead></thead>
                         <tbody>
-                            @foreach ($indicators as $ind)
-                                <tr>
-                                    <td class="col-lg-2"><input type="number" min="1" class="form-control"
-                                            value="{{ $ind->ord }}"></td>
-                                    <td> {{ $ind->value }}
-                                    </td>
-
-                                    <td class="col-lg-2"><input type="number" min="1" class="form-control"
-                                            value="{{ $ind->percentage }}"></td>
-                                    <td><button class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
-                                </tr>
-                            @endforeach
                         </tbody>
-
                     </table>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -148,11 +147,50 @@
         </div>
     </div>
 
+    <script>
+        $(document).ready(function() {
+            // Attach change event listener to the select dropdown
+            $('#indicatorSelect').change(function() {
+                var selectedValue = $(this).val();
+
+                // Make an AJAX request to get criteria and remarks for the selected indicator
+                $.ajax({
+                    url: '{{ route('get-criteria') }}', // Replace with your actual route
+                    method: 'GET',
+                    data: {
+                        indicator: selectedValue
+
+                    },
+                    success: function(response) {
+                        // Update the table body with the received criteria and remarks
+                        var thead = $('#criteriaTable thead');
+
+                        var tbody = $('#criteriaTable tbody');
+                        tbody.empty();
+
+                        for (var i = 0; i < response.length; i++) {
+                            var criteria = response[i].criteria;
+                            var remarks = response[i].remarks;
+                            var row = '<tr><td>' + criteria + '</td><td>' + remarks +
+                                '</td><td>' +
+                                '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
+                                '</td></tr>';
+                            tbody.append(row);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 
 
 
 
-    <script></script>
+
+
 
 
 

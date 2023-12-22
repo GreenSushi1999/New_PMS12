@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\evaluation;
 use App\hr;
 use DateTime;
 use App\grade;
@@ -378,6 +379,29 @@ class PerformanceController extends Controller
     {
         $indicators = indicators::where('doc_cid', 2)->get();
         return view('pages.editSupervisory', compact('indicators'));
+    }
+    public function edit_values(Request $request)
+    {
+        $order = $request->input('order');
+        $values = $request->input('value');
+        $percentages = $request->input('percentage');
+
+        foreach ($order as $cid) {
+            indicators::where(['cid' => $cid])->update([
+                'value' => $values[$cid],
+                'percentage' => $percentages[$cid],
+            ]);
+        }
+
+        return back();
+    }
+    public function getCriteria(Request $request)
+    {
+        $indicatorId = $request->input('indicator');
+
+        $evaluationData = evaluation::where('ind_cid', $indicatorId)->get(['criteria', 'remarks']);
+
+        return response()->json($evaluationData);
     }
 
 }

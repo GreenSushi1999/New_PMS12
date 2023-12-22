@@ -44,7 +44,8 @@ Route::middleware(['web', 'custom.auth'])->group(function () {
 
 });
 
+
 Route::get('/pms/edit/rank-and-file-level', 'PerformanceController@editRank');
 Route::get('/pms/edit/supervisory-officer-level', 'PerformanceController@editSupervisory');
-
-
+Route::post('/edit-values', 'PerformanceController@edit_values')->name('edit-values');
+Route::get('/get-criteria', 'PerformanceController@getCriteria')->name('get-criteria');
