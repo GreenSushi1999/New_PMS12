@@ -67,7 +67,7 @@
 
                     <button class="btn btn-primary text-white" id="openAddValues" type="button"> Add Value</button>
 
-                    <table class="table table-bordered mt-2">
+                    <table class="table table-bordered mt-2" id="valuestbl">
                         <form action="{{ route('edit-values') }}" method="POST">
                             {{ csrf_field() }}
                             <thead>
@@ -80,7 +80,7 @@
                                     <th class="text-center col-lg-1">Delete</th>
                                 </tr>
                             </thead>
-                            <tbody class="sortable-table">
+                            <tbody>
 
                                 @foreach ($indicators as $index => $ind)
                                     <tr>
@@ -133,9 +133,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- <form action="{{ route('edit-criteria') }}" method="POST"> --}}
-                    {{-- {{ csrf_field() }} --}}
-
                     <select name="value" id="indicatorSelect" class="select2 form-select">
                         <option value="" disabled selected>Select</option>
                         @foreach ($indicators as $ind)
@@ -284,12 +281,15 @@
 
             // Add an event handler for the "Add" button in the modal
             $('#openAddValues').on('click', function() {
-                var tbody = $('.sortable-table');
+                var tbody = $('#valuestbl tbody');
+                var newIndex = tbody.find('tr').length; // Get the number of existing rows
                 var newRow = '<tr>' +
-                    '<td><input type="text" name="newOrder[]" class="form-control"></td>' +
-                    '<td><input type="text" name="newValue[]" class="form-control"></td>' +
-                    '<td><input type="number" name="newCritical[]" min="0" max="1" class="form-control"></td>' +
-                    '<td class="col-lg-2"><input type="number" min="1" name="newPercentage[]" class="form-control"></td>' +
+                    '<td><input type="text" name="newOrder[' + newIndex + ']" class="form-control"></td>' +
+                    '<td><input type="text" name="newValue[' + newIndex + ']" class="form-control"></td>' +
+                    '<td><input type="number" name="newCritical[' + newIndex +
+                    ']" min="0" max="1" class="form-control"></td>' +
+                    '<td class="col-lg-2"><input type="number" min="1" name="newPercentage[' + newIndex +
+                    ']" class="form-control"></td>' +
                     '<td><button class="btn btn-danger" type="button" onclick="deleteNewRow(this)"><i class="fa fa-trash-o"></i></button></td>' +
                     '</tr>';
                 tbody.append(newRow);
