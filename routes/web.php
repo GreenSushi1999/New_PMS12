@@ -12,7 +12,7 @@ use App\Http\Controllers\AuthController;
 |
 */
 Route::middleware(['web', 'auth.check'])->group(function () {
-    Route::get('/login', 'PerformanceController@loginform');
+    Route::get('/', 'PerformanceController@loginform');
     Route::post('/login', 'PerformanceController@login')->name('login');
 
 });
@@ -48,5 +48,9 @@ Route::middleware(['web', 'custom.auth'])->group(function () {
 Route::get('/pms/edit/rank-and-file-level', 'PerformanceController@editRank');
 Route::get('/pms/edit/supervisory-officer-level', 'PerformanceController@editSupervisory');
 Route::post('/edit-values', 'PerformanceController@edit_values')->name('edit-values');
+Route::post('/delete-value', 'PerformanceController@delete_value')->name('delete-value');
 Route::get('/get-criteria', 'PerformanceController@getCriteria')->name('get-criteria');
 Route::post('/edit-criteria', 'PerformanceController@edit_criteria')->name('edit-criteria');
+Route::post('/add-rank-value', 'PerformanceController@add_rank_value')->name('add-rank-value');
+Route::post('/add-criteria-value', 'PerformanceController@add_criteria_value')->name('add-criteria-value');
+Route::post('/delete-criteria', 'PerformanceController@delete_criteria')->name('delete-criteria');

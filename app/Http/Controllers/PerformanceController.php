@@ -32,7 +32,7 @@ class PerformanceController extends Controller
 
         Session::forget('user');
 
-        return redirect()->route('login')->with('success', 'Logged out successfully');
+        return redirect('/')->with('success', 'Logged out successfully');
     }
     public function login(Request $request)
     {
@@ -372,24 +372,30 @@ class PerformanceController extends Controller
     }
     public function editRank()
     {
-        $indicators = indicators::where('doc_cid', 1)->get();
+        $indicators = indicators::where('doc_cid', 1)->orderBy('ord', 'asc')->get();
         return view('pages.editRank', compact('indicators'));
     }
     public function editSupervisory()
     {
-        $indicators = indicators::where('doc_cid', 2)->get();
+        $indicators = indicators::where('doc_cid', 2)->orderBy('ord', 'asc')->get();
         return view('pages.editSupervisory', compact('indicators'));
     }
     public function edit_values(Request $request)
     {
-        $order = $request->input('order');
+
+        $data = $request->all();
+        $cids = $request->input('cids');
         $values = $request->input('value');
         $percentages = $request->input('percentage');
+        $critical_incident = $request->input('critical');
+        $order = $request->input('order');
 
-        foreach ($order as $cid) {
+        foreach ($cids as $cid) {
             indicators::where(['cid' => $cid])->update([
                 'value' => $values[$cid],
                 'percentage' => $percentages[$cid],
+                'critical_incident' => $critical_incident[$cid],
+                'ord' => $order[$cid]
             ]);
         }
 
@@ -399,21 +405,100 @@ class PerformanceController extends Controller
     {
         $indicatorId = $request->input('indicator');
 
-        $evaluationData = evaluation::where('ind_cid', $indicatorId)->get(['cid', 'criteria', 'remarks']);
+        $evaluationData = evaluation::where('ind_cid', $indicatorId)->orderBy('ord', 'asc')->get(['cid', 'criteria', 'remarks', 'ord']);
+
 
         return response()->json($evaluationData);
     }
     public function edit_criteria(Request $request)
     {
         $data = $request->all();
+        $cids = $request->input('cids');
+        $criteria = $request->input('criteria');
         $remarks = $request->input('remarks');
+        $ord = $request->input('ord');
 
-        foreach ($remarks as $cid => $remark) {
-            evaluation::where('cid', $cid)->update(['remarks' => $remark]);
+        foreach ($cids as $cid) {
+
+            evaluation::where(['cid' => $cid])->update([
+                'criteria' => $criteria[$cid],
+                'remarks' => $remarks[$cid],
+                'ord' => $ord[$cid],
+
+            ]);
+
         }
 
-        // Optionally, you can add a response, redirect, or any other logic here
+        $indCIDs = $request->input('indCID');
+        $newOrders = $request->input('newOrder');
+        $newCriteria = $request->input('newCriteria');
+        $newRemarks = $request->input('newRemarks');
+
+        if (isset($indCIDs)) {
+            foreach ($indCIDs as $index => $cid) {
+                $evaluation = new evaluation();
+                $evaluation->ind_cid = $cid;
+                $evaluation->criteria = $newCriteria[$index];
+                $evaluation->ord = $newOrders[$index];
+                $evaluation->remarks = $newRemarks[$index];
+                $evaluation->save();
+            }
+        }
+        return back();
+
+    }
+
+
+    public function delete_value(Request $request)
+    {
+        $cid = $request->input('cid');
+        try {
+            $deleted = indicators::where('cid', $cid)->delete();
+
+            if ($deleted) {
+                evaluation::where('ind_cid', $cid)->delete();
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to delete the value.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error occurred during the deletion.']);
+        }
+    }
+
+    public function add_rank_value(Request $request)
+    {
+        $value = $request->input('addValue');
+        $percentage = $request->input('addPercentage');
+        $criticalIncident = $request->has('addCriticalIncident') ? 1 : 0;
+        $order = $request->input('addOrder');
+
+
+        $indicator = new indicators();
+        $indicator->doc_cid = 1;
+        $indicator->value = $value;
+        $indicator->percentage = $percentage;
+        $indicator->critical_incident = $criticalIncident;
+        $indicator->ord = $order;
+        $indicator->save();
+
         return back();
     }
 
+
+    public function delete_criteria(Request $request)
+    {
+        $cid = $request->input('cid');
+        try {
+            $deleted = evaluation::where('cid', $cid)->delete();
+
+            if ($deleted) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to delete the value.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error occurred during the deletion.']);
+        }
+    }
 }

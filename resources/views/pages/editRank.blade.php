@@ -3,9 +3,7 @@
 @section('title', 'Performance Management System')
 @section('content')
     <!-- Add these CDN links to your HTML file -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
     <div class="container mt-5">
         <div class="row justify-content-center align-item-center">
@@ -34,7 +32,7 @@
                                         <th>{{ $ind->value }}</th>
 
                                     </tr>
-                                    @foreach ($ind->evaluation as $ind_eval)
+                                    @foreach ($ind->evaluation->sortBy('ord') as $ind_eval)
                                         <tr>
                                             <td>
                                                 {{ $ind_eval->criteria }}
@@ -66,13 +64,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <button class="btn btn-success">Add new</button>
+
+                    <button class="btn btn-primary text-white" id="openAddValues" type="button"> Add Value</button>
+
                     <table class="table table-bordered mt-2">
                         <form action="{{ route('edit-values') }}" method="POST">
                             {{ csrf_field() }}
                             <thead>
                                 <tr>
-                                    <th class="text-center "> Values
+                                    <th class="text-center col-lg-1">Order</th>
+                                    <th class="text-center"> Values
                                     </th>
                                     <th class="text-center col-lg-1">Critical <br> Incident</th>
                                     <th class="text-center">Percentage</th>
@@ -83,13 +84,16 @@
 
                                 @foreach ($indicators as $index => $ind)
                                     <tr>
-                                        <input type="hidden" name="order[]" value="{{ $ind->cid }}">
+                                        <input type="hidden" name="cids[{{ $ind->cid }}]" value={{ $ind->cid }}>
+
+                                        <td><input type="text" name="order[{{ $ind->cid }}]" class="form-control"
+                                                value="{{ $ind->ord }}"></td>
                                         <td>
                                             <input type="text" name="value[{{ $ind->cid }}]"
                                                 value="{{ $ind->value }}" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="number" name="critical_incident[{{ $ind->cid }}]"
+                                            <input type="number" name="critical[{{ $ind->cid }}]"
                                                 value="{{ $ind->critical_incident }}" min="0" max="1"
                                                 class="form-control">
                                         </td>
@@ -98,7 +102,8 @@
                                                 name="percentage[{{ $ind->cid }}]" value="{{ $ind->percentage }}">
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                            <button class="btn btn-danger" onclick="deleteValue({{ $ind->cid }})"
+                                                type="button"><i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -118,6 +123,7 @@
         </div>
     </div>
 
+
     <div class="modal fade" id="editCriteria_modal" tabindex="-1" aria-labelledby="editCriteriaModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -133,10 +139,12 @@
                     <select name="value" id="indicatorSelect" class="select2 form-select">
                         <option value="" disabled selected>Select</option>
                         @foreach ($indicators as $ind)
-                            <option value="{{ $ind->cid }}">{{ $ind->value }}</option>
+                            <option value="{{ $ind->cid }}" data-cid="{{ $ind->cid }}">{{ $ind->value }}
+                            </option>
                         @endforeach
                     </select>
 
+                    <div id="Addbtn_div" class="mt-2"></div>
                     <form action="{{ route('edit-criteria') }}" method="POST">
                         {{ csrf_field() }}
                         <table id="criteriaTable" class="table table-bordered mt-2">
@@ -155,11 +163,16 @@
         </div>
     </div>
 
+
+
+
     <script>
         $(document).ready(function() {
-            // Attach change event listener to the select dropdown
+
             $('#indicatorSelect').change(function() {
-                var selectedValue = $(this).val();
+                var selectedOption = $(this).find(':selected');
+                var selectedValue = selectedOption.val();
+                var selectedCid = selectedOption.data('cid'); // Get the ind->cid value
 
                 // Make an AJAX request to get criteria and remarks for the selected indicator
                 $.ajax({
@@ -167,14 +180,19 @@
                     method: 'GET',
                     data: {
                         indicator: selectedValue
-
                     },
                     success: function(response) {
-                        // Update the table body with the received criteria and remarks
+                        // Update the table body with the received criteria and remarks  
+                        var addbtnDiv = $('#Addbtn_div');
+                        addbtnDiv.empty();
+                        var addbtn =
+                            '<button type="button" class="btn btn-primary" id="openAddCriteria" data-cid="' +
+                            selectedCid + '">Add Criteria</button>';
+                        addbtnDiv.append(addbtn);
                         var thead = $('#criteriaTable thead');
                         thead.empty();
                         var headrow =
-                            '<tr><th class="text-center">Criteria</th><th class="col-lg-1 text-center">Remarks</th><th class="col-lg-1 text-center">Delete</th></tr>';
+                            '<tr><th class="col-lg-1">Order</th><th class="text-center">Criteria</th><th class="col-lg-1 text-center">Remarks</th><th class="col-lg-1 text-center">Delete</th></tr>';
                         thead.append(headrow);
                         var tbody = $('#criteriaTable tbody');
                         tbody.empty();
@@ -182,14 +200,24 @@
                         for (var i = 0; i < response.length; i++) {
                             var criteria = response[i].criteria;
                             var remarks = response[i].remarks;
+                            var cid = response[i].cid;
+                            var order = response[i].ord;
+
                             var row = '<tr>' +
-                                '<td><input type="text" class="form-control col-lg-4" name="criteria[' +
+                                '<td><input type="hidden" class="form-control col-lg-1" name="cids[' +
+                                response[i].cid +
+                                ']" value="' + response[i].cid +
+                                '">  <input type="text" class="form-control col-lg-1" name="ord[' +
+                                response[i].cid +
+                                ']" value="' + order +
+                                '"></td><td><input type="text" class="form-control col-lg-4" name="criteria[' +
                                 response[i].cid +
                                 ']" value="' + criteria + '"></td>' +
                                 '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="remarks[' +
                                 response[i].cid + ']" value="' + remarks + '"></td>' +
                                 '<td>' +
-                                '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
+                                '<button class="btn btn-danger" type="button" onclick="deleteCriteria(' +
+                                response[i].cid + ')"><i class="fa fa-trash-o"></i></button>' +
                                 '</td>' +
                                 '</tr>';
 
@@ -201,16 +229,108 @@
                     }
                 });
             });
+
+            $('#Addbtn_div').on('click', '#openAddCriteria', function() {
+                var selectedCid = $(this).data('cid'); // Get the ind->cid value
+                var tbody = $('#criteriaTable tbody');
+                var newRow = '<tr>' +
+                    '<td><input type="hidden" class="form-control" name="indCID[]" value="' + selectedCid +
+                    '">' +
+                    '<input type="text" class="form-control col-lg-1" name="newOrder[]"></td>' +
+                    '<td><input type="text" class="form-control col-lg-4" name="newCriteria[]"></td>' +
+                    '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="newRemarks[]" value=""></td>' +
+                    '<td>' +
+                    '<button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>' +
+                    '</td>' +
+                    '</tr>';
+                tbody.append(newRow);
+            });
+
         });
+
+
+        function deleteValue(cid) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action will delete the associated criteria under this value. Are you sure you want to proceed? Please note that this action cannot be undone.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('delete-value') }}', // Update with your actual route
+                        type: 'POST',
+                        data: {
+                            cid: cid,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            location.reload();
+                        },
+                        error: function() {
+                            alert('Error occurred during the deletion.');
+                        }
+                    });
+                }
+            })
+        };
+
+
+
+        $(document).ready(function() {
+
+            // Add an event handler for the "Add" button in the modal
+            $('#openAddValues').on('click', function() {
+                var tbody = $('.sortable-table');
+                var newRow = '<tr>' +
+                    '<td><input type="text" name="newOrder[]" class="form-control"></td>' +
+                    '<td><input type="text" name="newValue[]" class="form-control"></td>' +
+                    '<td><input type="number" name="newCritical[]" min="0" max="1" class="form-control"></td>' +
+                    '<td class="col-lg-2"><input type="number" min="1" name="newPercentage[]" class="form-control"></td>' +
+                    '<td><button class="btn btn-danger" type="button" onclick="deleteNewRow(this)"><i class="fa fa-trash-o"></i></button></td>' +
+                    '</tr>';
+                tbody.append(newRow);
+            });
+
+            // Function to delete the dynamically added row
+            window.deleteNewRow = function(element) {
+                $(element).closest('tr').remove();
+            };
+
+        });
+
+
+        function deleteCriteria(cid) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action will delete the associated criteria under this value. Are you sure you want to proceed? Please note that this action cannot be undone.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('delete-criteria') }}', // Update with your actual route
+                        type: 'POST',
+                        data: {
+                            cid: cid,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            location.reload();
+                        },
+                        error: function() {
+                            alert('Error occurred during the deletion.');
+                        }
+                    });
+                }
+            })
+        };
     </script>
-
-
-
-
-
-
-
-
-
 
 @endsection

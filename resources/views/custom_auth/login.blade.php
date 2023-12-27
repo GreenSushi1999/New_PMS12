@@ -50,8 +50,8 @@
             <div class="row justify-content-center align-item-center">
                 <div class="col-md-4">
                     <div class="card shadow">
-                        <div class="card-header bg-primary d-flex align-item-center justify-content-center">
-                            <h5 class="card-title text-white">Employee Portal</h5>
+                        <div class="card-header bg-primary p-1 d-flex align-item-center justify-content-center">
+                            <h5 class="card-title text-white mt-2 ">EMPLOYEE PORTAL</h5>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('login') }}" method="POST">
