@@ -64,3 +64,4 @@ Route::get('/get-supervisory-criteria', 'PerformanceController@getSuperCriteria'
 
 
 
+Route::get('/update-excel', 'ExcelController@updateExcel');
