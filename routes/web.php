@@ -47,10 +47,16 @@ Route::middleware(['web', 'custom.auth'])->group(function () {
 
 Route::get('/pms/edit/rank-and-file-level', 'PerformanceController@editRank');
 Route::get('/pms/edit/supervisory-officer-level', 'PerformanceController@editSupervisory');
-Route::post('/edit-values', 'PerformanceController@edit_values')->name('edit-values');
+
+Route::post('/edit-rank-values', 'PerformanceController@edit_Rankvalues')->name('edit-Rankvalues');
+Route::post('/edit-rank-criteria', 'PerformanceController@edit_Rankcriteria')->name('edit-Rankcriteria');
+Route::get('/get-rank-criteria', 'PerformanceController@getRankCriteria')->name('get-Rankcriteria');
+Route::get('/get-rank-values', 'PerformanceController@getRankValues')->name('get-Rankvalues');
+
 Route::post('/delete-value', 'PerformanceController@delete_value')->name('delete-value');
-Route::get('/get-criteria', 'PerformanceController@getCriteria')->name('get-criteria');
-Route::post('/edit-criteria', 'PerformanceController@edit_criteria')->name('edit-criteria');
-Route::post('/add-rank-value', 'PerformanceController@add_rank_value')->name('add-rank-value');
-Route::post('/add-criteria-value', 'PerformanceController@add_criteria_value')->name('add-criteria-value');
 Route::post('/delete-criteria', 'PerformanceController@delete_criteria')->name('delete-criteria');
+
+Route::post('/edit-supervisory-values', 'PerformanceController@edit_Supervalues')->name('edit-Supervalues');
+Route::post('/edit-supervisory-criteria', 'PerformanceController@edit_Supercriteria')->name('edit-Supercriteria');
+Route::get('/get-supervisory-values', 'PerformanceController@getSuperValues')->name('get-Supervalues');
+Route::get('/get-supervisory-criteria', 'PerformanceController@getSuperCriteria')->name('get-Supercriteria');

@@ -15,7 +15,7 @@
                     <div class="card-body">
 
                         <button class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#editValues_modal"
-                            id="editValues"> Edit Values</button>
+                            onlick="openEditValues" id="editValues"> Edit Values</button>
                         <button class="btn btn-primary text-white" data-bs-toggle="modal"
                             data-bs-target="#editCriteria_modal" id="editCriteria"> Edit Criteria</button>
 
@@ -66,53 +66,13 @@
                 <div class="modal-body">
 
                     <button class="btn btn-primary text-white" id="openAddValues" type="button"> Add Value</button>
-
-                    <table class="table table-bordered mt-2" id="valuestbl">
-                        <form action="{{ route('edit-values') }}" method="POST">
-                            {{ csrf_field() }}
-                            <thead>
-                                <tr>
-                                    <th class="text-center col-lg-1">Order</th>
-                                    <th class="text-center"> Values
-                                    </th>
-                                    <th class="text-center col-lg-1">Critical <br> Incident</th>
-                                    <th class="text-center">Percentage</th>
-                                    <th class="text-center col-lg-1">Delete</th>
-                                </tr>
-                            </thead>
+                    <form action="{{ route('edit-Rankvalues') }}" method="POST">
+                        {{ csrf_field() }}
+                        <table id="valuesTable" class="table table-bordered mt-2">
+                            <thead></thead>
                             <tbody>
-
-                                @foreach ($indicators as $index => $ind)
-                                    <tr>
-                                        <input type="hidden" name="cids[{{ $ind->cid }}]" value={{ $ind->cid }}>
-
-                                        <td><input type="text" name="order[{{ $ind->cid }}]" class="form-control"
-                                                value="{{ $ind->ord }}"></td>
-                                        <td>
-                                            <input type="text" name="value[{{ $ind->cid }}]"
-                                                value="{{ $ind->value }}" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="number" name="critical[{{ $ind->cid }}]"
-                                                value="{{ $ind->critical_incident }}" min="0" max="1"
-                                                class="form-control">
-                                        </td>
-                                        <td class="col-lg-2">
-                                            <input type="number" min="1" class="form-control"
-                                                name="percentage[{{ $ind->cid }}]" value="{{ $ind->percentage }}">
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger" onclick="deleteValue({{ $ind->cid }})"
-                                                type="button"><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
                             </tbody>
-
-
-                    </table>
-
+                        </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -122,6 +82,8 @@
             </div>
         </div>
     </div>
+
+
 
 
     <div class="modal fade" id="editCriteria_modal" tabindex="-1" aria-labelledby="editCriteriaModalLabel"
@@ -142,7 +104,7 @@
                     </select>
 
                     <div id="Addbtn_div" class="mt-2"></div>
-                    <form action="{{ route('edit-criteria') }}" method="POST">
+                    <form action="{{ route('edit-Rankcriteria') }}" method="POST">
                         {{ csrf_field() }}
                         <table id="criteriaTable" class="table table-bordered mt-2">
                             <thead></thead>
@@ -166,6 +128,75 @@
     <script>
         $(document).ready(function() {
 
+            $.ajax({
+                url: '{{ route('get-Rankvalues') }}',
+                method: 'GET',
+                data: {},
+                success: function(response) {
+
+                    var thead = $('#valuesTable thead');
+                    thead.empty();
+                    var headrow =
+                        '<tr><th class="col-lg-1">Order</th><th class="text-center">Values</th><th class="col-lg-1 text-center">Critical Incident</th><th class="col-lg-2 text-center">Percentage</th><th class="col-lg-1 text-center">Delete</th></tr>';
+                    thead.append(headrow);
+                    var tbody = $('#valuesTable tbody');
+                    tbody.empty();
+
+                    for (var i = 0; i < response.length; i++) {
+                        var cid = response[i].cid;
+                        var order = response[i].ord;
+                        var values = response[i].value;
+                        var critical_incident = response[i].critical_incident;
+                        var percentage = response[i].percentage;
+
+                        var row = '<tr>' +
+                            '<td><input type="hidden" class="form-control col-lg-1" name="cids[' +
+                            response[i].cid + ']" value="' + response[i].cid +
+                            '">  <input type="text" class="form-control col-lg-1" name="ord[' +
+                            response[i].cid + ']" value="' + order +
+                            '"></td><td><input type="text" class="form-control col-lg-4" name="value[' +
+                            response[i].cid + ']" value="' + values + '"></td>' +
+                            '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="critical[' +
+                            response[i].cid + ']" value="' + critical_incident + '"></td>' +
+                            '<td><input type="number"   class="form-control col-lg-1" name="percentage[' +
+                            response[i].cid + ']" value="' + percentage + '"></td>' +
+                            '<td>' +
+                            '<button class="btn btn-danger" type="button" onclick="deleteValues(' +
+                            response[i].cid + ')"><i class="fa fa-trash-o"></i></button>' +
+                            '</td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+
+            $('#openAddValues').on('click', function() {
+                var tbody = $('#valuesTable tbody');
+                var newIndex = tbody.find('tr').length;
+                var newRow = '<tr>' +
+                    '<td><input type="text" name="newOrder[' + newIndex +
+                    ']" class="form-control"></td>' +
+                    '<td><input type="text" name="newValue[' + newIndex +
+                    ']" class="form-control"></td>' +
+                    '<td><input type="number" name="newCritical[' + newIndex +
+                    ']" min="0" max="1" class="form-control"></td>' +
+                    '<td class="col-lg-2"><input type="number" min="1" name="newPercentage[' +
+                    newIndex +
+                    ']" class="form-control"></td>' +
+                    '<td><button class="btn btn-danger" type="button" onclick="deleteNewRow(this)"><i class="fa fa-trash-o"></i></button></td>' +
+                    '</tr>';
+                tbody.append(newRow);
+            });
+
+
+            window.deleteNewRow = function(element) {
+                $(element).closest('tr').remove();
+            };
+
             $('#indicatorSelect').change(function() {
                 var selectedOption = $(this).find(':selected');
                 var selectedValue = selectedOption.val();
@@ -173,7 +204,7 @@
 
                 // Make an AJAX request to get criteria and remarks for the selected indicator
                 $.ajax({
-                    url: '{{ route('get-criteria') }}', // Replace with your actual route
+                    url: '{{ route('get-Rankcriteria') }}', // Replace with your actual route
                     method: 'GET',
                     data: {
                         indicator: selectedValue
@@ -246,7 +277,7 @@
         });
 
 
-        function deleteValue(cid) {
+        function deleteValues(cid) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "This action will delete the associated criteria under this value. Are you sure you want to proceed? Please note that this action cannot be undone.",
@@ -276,37 +307,10 @@
         };
 
 
-
-        $(document).ready(function() {
-
-            // Add an event handler for the "Add" button in the modal
-            $('#openAddValues').on('click', function() {
-                var tbody = $('#valuestbl tbody');
-                var newIndex = tbody.find('tr').length; // Get the number of existing rows
-                var newRow = '<tr>' +
-                    '<td><input type="text" name="newOrder[' + newIndex + ']" class="form-control"></td>' +
-                    '<td><input type="text" name="newValue[' + newIndex + ']" class="form-control"></td>' +
-                    '<td><input type="number" name="newCritical[' + newIndex +
-                    ']" min="0" max="1" class="form-control"></td>' +
-                    '<td class="col-lg-2"><input type="number" min="1" name="newPercentage[' + newIndex +
-                    ']" class="form-control"></td>' +
-                    '<td><button class="btn btn-danger" type="button" onclick="deleteNewRow(this)"><i class="fa fa-trash-o"></i></button></td>' +
-                    '</tr>';
-                tbody.append(newRow);
-            });
-
-            // Function to delete the dynamically added row
-            window.deleteNewRow = function(element) {
-                $(element).closest('tr').remove();
-            };
-
-        });
-
-
         function deleteCriteria(cid) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "This action will delete the associated criteria under this value. Are you sure you want to proceed? Please note that this action cannot be undone.",
+                text: "Are you sure you want to proceed? Please note that this action cannot be undone.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

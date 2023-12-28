@@ -380,28 +380,8 @@ class PerformanceController extends Controller
         $indicators = indicators::where('doc_cid', 2)->orderBy('ord', 'asc')->get();
         return view('pages.editSupervisory', compact('indicators'));
     }
-    public function edit_values(Request $request)
-    {
 
-        $data = $request->all();
-        $cids = $request->input('cids');
-        $values = $request->input('value');
-        $percentages = $request->input('percentage');
-        $critical_incident = $request->input('critical');
-        $order = $request->input('order');
-
-        foreach ($cids as $cid) {
-            indicators::where(['cid' => $cid])->update([
-                'value' => $values[$cid],
-                'percentage' => $percentages[$cid],
-                'critical_incident' => $critical_incident[$cid],
-                'ord' => $order[$cid]
-            ]);
-        }
-
-        return back();
-    }
-    public function getCriteria(Request $request)
+    public function getRankCriteria(Request $request)
     {
         $indicatorId = $request->input('indicator');
 
@@ -410,7 +390,7 @@ class PerformanceController extends Controller
 
         return response()->json($evaluationData);
     }
-    public function edit_criteria(Request $request)
+    public function edit_Rankcriteria(Request $request)
     {
         $data = $request->all();
         $cids = $request->input('cids');
@@ -418,17 +398,18 @@ class PerformanceController extends Controller
         $remarks = $request->input('remarks');
         $ord = $request->input('ord');
 
-        foreach ($cids as $cid) {
+        if (isset($cids)) {
+            foreach ($cids as $cid) {
 
-            evaluation::where(['cid' => $cid])->update([
-                'criteria' => $criteria[$cid],
-                'remarks' => $remarks[$cid],
-                'ord' => $ord[$cid],
+                evaluation::where(['cid' => $cid])->update([
+                    'criteria' => $criteria[$cid],
+                    'remarks' => $remarks[$cid],
+                    'ord' => $ord[$cid],
 
-            ]);
+                ]);
 
+            }
         }
-
         $indCIDs = $request->input('indCID');
         $newOrders = $request->input('newOrder');
         $newCriteria = $request->input('newCriteria');
@@ -449,41 +430,6 @@ class PerformanceController extends Controller
     }
 
 
-    public function delete_value(Request $request)
-    {
-        $cid = $request->input('cid');
-        try {
-            $deleted = indicators::where('cid', $cid)->delete();
-
-            if ($deleted) {
-                evaluation::where('ind_cid', $cid)->delete();
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false, 'message' => 'Failed to delete the value.']);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error occurred during the deletion.']);
-        }
-    }
-
-    public function add_rank_value(Request $request)
-    {
-        $value = $request->input('addValue');
-        $percentage = $request->input('addPercentage');
-        $criticalIncident = $request->has('addCriticalIncident') ? 1 : 0;
-        $order = $request->input('addOrder');
-
-
-        $indicator = new indicators();
-        $indicator->doc_cid = 1;
-        $indicator->value = $value;
-        $indicator->percentage = $percentage;
-        $indicator->critical_incident = $criticalIncident;
-        $indicator->ord = $order;
-        $indicator->save();
-
-        return back();
-    }
 
 
     public function delete_criteria(Request $request)
@@ -501,4 +447,175 @@ class PerformanceController extends Controller
             return response()->json(['success' => false, 'message' => 'Error occurred during the deletion.']);
         }
     }
+
+
+    public function getRankValues(Request $request)
+    {
+        $indicators = indicators::where('doc_cid', 1)->orderBy('ord', 'asc')->get(['cid', 'value', 'percentage', 'critical_incident', 'ord']);
+
+        return response()->json($indicators);
+    }
+
+    public function delete_value(Request $request)
+    {
+        $cid = $request->input('cid');
+        try {
+            $deleted = indicators::where('cid', $cid)->delete();
+
+            if ($deleted) {
+                evaluation::where('ind_cid', $cid)->delete();
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to delete the value.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error occurred during the deletion.']);
+        }
+    }
+
+
+    public function edit_Rankvalues(Request $request)
+    {
+
+        $data = $request->all();
+        $cids = $request->input('cids');
+        $values = $request->input('value');
+        $percentages = $request->input('percentage');
+        $critical_incident = $request->input('critical');
+        $order = $request->input('ord');
+
+        if ($cids) {
+            foreach ($cids as $cid) {
+                indicators::where(['cid' => $cid])->update([
+                    'value' => $values[$cid],
+                    'percentage' => $percentages[$cid],
+                    'critical_incident' => $critical_incident[$cid],
+                    'ord' => $order[$cid]
+                ]);
+            }
+        }
+
+
+        $newOrders = $request->input('newOrder');
+        $newValue = $request->input('newValue');
+        $newCritical = $request->input('newCritical');
+        $newPercentage = $request->input('newPercentage');
+
+        if (isset($newOrders)) {
+            foreach ($newOrders as $index => $ord) {
+                $indicator = new indicators();
+                $indicator->doc_cid = 1;
+                $indicator->value = $newValue[$index];
+                $indicator->percentage = $newPercentage[$index];
+                $indicator->critical_incident = $newCritical[$index];
+                $indicator->ord = $ord;
+                $indicator->save();
+            }
+        }
+
+        return back();
+    }
+
+
+    public function edit_Supervalues(Request $request)
+    {
+
+        $data = $request->all();
+        $cids = $request->input('cids');
+        $values = $request->input('value');
+        $percentages = $request->input('percentage');
+        $critical_incident = $request->input('critical');
+        $order = $request->input('ord');
+
+        if ($cids) {
+            foreach ($cids as $cid) {
+                indicators::where(['cid' => $cid])->update([
+                    'value' => $values[$cid],
+                    'percentage' => $percentages[$cid],
+                    'critical_incident' => $critical_incident[$cid],
+                    'ord' => $order[$cid]
+                ]);
+            }
+        }
+
+
+        $newOrders = $request->input('newOrder');
+        $newValue = $request->input('newValue');
+        $newCritical = $request->input('newCritical');
+        $newPercentage = $request->input('newPercentage');
+
+        if (isset($newOrders)) {
+            foreach ($newOrders as $index => $ord) {
+                $indicator = new indicators();
+                $indicator->doc_cid = 2;
+                $indicator->value = $newValue[$index];
+                $indicator->percentage = $newPercentage[$index];
+                $indicator->critical_incident = $newCritical[$index];
+                $indicator->ord = $ord;
+                $indicator->save();
+            }
+        }
+
+        return back();
+    }
+
+    public function edit_Supercriteria(Request $request)
+    {
+        $data = $request->all();
+        $cids = $request->input('cids');
+        $criteria = $request->input('criteria');
+        $remarks = $request->input('remarks');
+        $ord = $request->input('ord');
+
+        if (isset($cids)) {
+            foreach ($cids as $cid) {
+
+                evaluation::where(['cid' => $cid])->update([
+                    'criteria' => $criteria[$cid],
+                    'remarks' => $remarks[$cid],
+                    'ord' => $ord[$cid],
+
+                ]);
+
+            }
+        }
+        $indCIDs = $request->input('indCID');
+        $newOrders = $request->input('newOrder');
+        $newCriteria = $request->input('newCriteria');
+        $newRemarks = $request->input('newRemarks');
+
+        if (isset($indCIDs)) {
+            foreach ($indCIDs as $index => $cid) {
+                $evaluation = new evaluation();
+                $evaluation->ind_cid = $cid;
+                $evaluation->criteria = $newCriteria[$index];
+                $evaluation->ord = $newOrders[$index];
+                $evaluation->remarks = $newRemarks[$index];
+                $evaluation->save();
+            }
+        }
+        return back();
+
+    }
+
+    public function getSuperValues(Request $request)
+    {
+        $indicators = indicators::where('doc_cid', 2)->orderBy('ord', 'asc')->get(['cid', 'value', 'percentage', 'critical_incident', 'ord']);
+
+        return response()->json($indicators);
+    }
+
+
+    public function getSuperCriteria(Request $request)
+    {
+        $indicatorId = $request->input('indicator');
+
+        $evaluationData = evaluation::where('ind_cid', $indicatorId)->orderBy('ord', 'asc')->get(['cid', 'criteria', 'remarks', 'ord']);
+
+
+        return response()->json($evaluationData);
+    }
+
+
+
 }

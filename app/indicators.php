@@ -9,6 +9,8 @@ class indicators extends Model
     protected $primaryKey = 'cid';
     protected $table = 'tblindicators';
     public $timestamps = true;
+    protected $fillable = ['criteria', 'remarks', 'percentage', 'ord'];
+
 
     public function evaluation()
     {
