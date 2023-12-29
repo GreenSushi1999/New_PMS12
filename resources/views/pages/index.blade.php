@@ -154,15 +154,12 @@
                  <form action="{{ route('save-info') }}" method="POST">
                      {{ csrf_field() }}
                      <div class="mb-3">
-                         <label for="doc_type" class="form-label">Choose your Document Type:</label>
-                         <select class="form-select" id="doc_type" name="doc_type" aria-label="Select input"
-                             required>
-                             <option selected disabled>Select an option</option>
-
-                             @foreach ($documents as $document)
-                                 <option value="{{ $document->cid }}">{{ $document->doc_name }}</option>
-                             @endforeach
-                         </select>
+                         <label for="doc_type" class="form-label">Document Type:</label>
+                         @if (Session::get('user')->hr->Head_Tag == 0)
+                             <input type="text" value="Rank And File Level" class="form-control" readonly>
+                         @elseif (Session::get('user')->hr->Head_Tag == 1)
+                             <input type="text" value="Supervisory/Officer Level" class="form-control" readonly>
+                         @endif
                      </div>
 
 
@@ -183,25 +180,28 @@
                          </select>
 
                      </div>
-                     <div class="mb-3">
-                         <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR
-                             :</label>
-                         <select class="form-select select2" id="director" name="director"
-                             aria-label="Select input" required>
-                             <option selected disabled>Select an option</option>
-                             @foreach ($HRS->unique('Name') as $HR)
-                                 <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
-                             @endforeach
-                         </select>
-                     </div>
+                     @if (Session::get('user')->hr->Head_Tag == 0)
+                         <div class="mb-3">
+                             <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR
+                                 :</label>
+                             <select class="form-select select2" id="director" name="director"
+                                 aria-label="Select input" required>
+                                 <option selected>Select an option</option>
+                                 @foreach ($raters->unique('Name') as $rater)
+                                     <option value="{{ $rater->EmpNo }}">{{ $rater->Name }}</option>
+                                 @endforeach
+                             </select>
+                         </div>
+                     @endif
                      <div class="mb-3">
                          <label for="op" class="form-label">OP / VPFA / VPAR:</label>
                          <select class="form-select select2" id="op" name="op" aria-label="Select input"
                              required>
                              <option selected disabled>Select an option</option>
-                             @foreach ($HRS->unique('Name') as $HR)
-                                 <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
-                             @endforeach
+                             <option value="{{ $op->EmpNo }}">{{ $op->Name }}</option>
+                             <option value="{{ $vpar->EmpNo }}">{{ $vpar->Name }}</option>
+                             <option value="{{ $vpfa->EmpNo }}">{{ $vpfa->Name }}</option>
+
                          </select>
                      </div>
              </div>

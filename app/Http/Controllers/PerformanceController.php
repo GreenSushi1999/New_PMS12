@@ -52,12 +52,14 @@ class PerformanceController extends Controller
     public function index()
     {
         $user = Session::get('user')->EmpNo;
+        $op = hr::where('Dept', 'OP')->where('Head_Tag', 1)->first();
+        $vpfa = hr::where('Dept', 'VPFA')->where('Head_Tag', 1)->first();
+        $vpar = hr::where('Dept', 'VPAR')->where('Head_Tag', 1)->first();
+
         if (Session::get('user')->hr->Head_Tag == 0) {
             $raters = hr::where('EmpNo', '<>', $user)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
-
         } elseif (Session::get('user')->hr->Head_Tag == 1) {
-            $rater = hr::where('Dir_ID', Session::get('user')->hr->Dir_ID)->where('Position', '<>', 'Head')->where('Head_Tag', 1)->first();
-
+            $raters = hr::where('EmpNo', '<>', $user)->where('Dept_ID', '<>', Session::get('user')->hr->Dept_ID)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
         }
 
         $documents = document::get();
@@ -65,7 +67,7 @@ class PerformanceController extends Controller
         $perf_ratee = performance::where('ratee_cid', $user)->get();
         $perf_rater = performance::where('rater_cid', $user)->get();
         $perf_hr = performance::all();
-        return view('pages.index', compact('HRS', 'raters', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
+        return view('pages.index', compact('op', 'vpfa', 'vpar', 'HRS', 'raters', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
     }
     public function save_info(Request $request)
     {
