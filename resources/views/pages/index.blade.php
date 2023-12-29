@@ -164,26 +164,9 @@
                              @endforeach
                          </select>
                      </div>
-                     <div class="mb-3">
-                         <label for="name" class="form-label">Name:</label>
-                         <input type="text" class="form-control" id="name" name="name"
-                             placeholder="Lastname, Firstname" required>
-                     </div>
-                     <div class="mb-3">
-                         <label for="position" class="form-label">Position:</label>
-                         <input type="text" class="form-control" id="position" name="position"
-                             placeholder="Position" required>
-                     </div>
-                     <div class="mb-3">
-                         <label for="department" class="form-label">Department:</label>
-                         <select class="form-select" id="department" name="department" aria-label="Select input"
-                             required>
-                             <option selected>Select an option</option>
-                             @foreach ($HRS->unique('DeptName') as $HR)
-                                 <option value="{{ $HR->Dept_ID }}">{{ $HR->DeptName }}</option>
-                             @endforeach
-                         </select>
-                     </div>
+
+
+
                      <div class="mb-3">
                          <label for="period_covered" class="form-label">Period Covered:</label>
                          <input type="text" class="form-control" id="period_covered" name="period_covered"
@@ -191,13 +174,14 @@
                      </div>
                      <div class="mb-3">
                          <label for="rater" class="form-label">Rater:</label>
-                         <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
+                         {{-- <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
                              @foreach ($HRS->unique('Name') as $HR)
                                  <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
                              @endforeach
-                         </select>
+                         </select> --}}
+                         <input type="text" class="" readonly>
                      </div>
                      <div class="mb-3">
                          <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR

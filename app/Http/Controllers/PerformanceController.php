@@ -51,8 +51,13 @@ class PerformanceController extends Controller
 
     public function index()
     {
-
         $user = Session::get('user')->EmpNo;
+        if (Session::get('user')->hr->Head_Tag == 0) {
+            $rater = hr::where('Dept_ID', Session::get('user')->hr->Dept_ID)->where('Head_Tag', 1)->first();
+        } elseif (Session::get('user')->hr->Head_Tag == 1) {
+            $rater = hr::where('EmpNo', '<>', Session::get('user')->EmpNo)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->where('Head_Tag', 1)->first();
+        }
+
         $documents = document::get();
         $HRS = hr::get();
         $perf_ratee = performance::where('ratee_cid', $user)->get();
