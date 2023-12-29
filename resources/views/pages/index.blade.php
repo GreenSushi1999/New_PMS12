@@ -174,14 +174,14 @@
                      </div>
                      <div class="mb-3">
                          <label for="rater" class="form-label">Rater:</label>
-                         {{-- <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
+                         <select class="form-select select2" id="rater" name="rater" aria-label="Select input"
                              required>
                              <option selected>Select an option</option>
-                             @foreach ($HRS->unique('Name') as $HR)
-                                 <option value="{{ $HR->EmpNo }}">{{ $HR->Name }}</option>
+                             @foreach ($raters->unique('Name') as $rater)
+                                 <option value="{{ $rater->EmpNo }}">{{ $rater->Name }}</option>
                              @endforeach
-                         </select> --}}
-                         <input type="text" class="" readonly>
+                         </select>
+
                      </div>
                      <div class="mb-3">
                          <label for="director" class="form-label">AVP-DIRECTOR / DIRECTOR / ASST. DIRECTOR
