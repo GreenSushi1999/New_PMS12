@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\evaluation;
 use App\hr;
 use DateTime;
+use App\excel;
 use App\grade;
 use App\ratings;
 use App\document;
 use App\agreement;
 use App\employees;
+use App\evaluation;
 use App\indicators;
 use App\achievement;
 use App\performance;
@@ -17,8 +18,10 @@ use App\perf_agreement;
 use App\recommendation;
 use App\perf_indicatorsAve;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class PerformanceController extends Controller
 {
@@ -78,6 +81,23 @@ class PerformanceController extends Controller
         $op_cid = $data['op'];
         $period_covered = $data['period_covered'];
 
+
+        
+        $doc_type = null; 
+        $originalFilePath = null;
+
+        if($user->hr->Head_Tag == 0 ) {
+            $doc_type = '_Rank_';
+            $originalFilePath = storage_path('app/public/rank.xls');
+        }elseif($user->hr->Head_Tag == 1){
+            $doc_type = '_Supervisory_';
+            $originalFilePath = storage_path('app/public/supervisory.xls');
+        }
+      
+        $newFileName = $ratee_cid .  $doc_type . now()->format('Ymd_His') . '.xls'; 
+        $newFilePath = storage_path('app/public/pms/' . $newFileName);
+        copy($originalFilePath, $newFilePath);
+
         $performance = new performance();
         $performance->ratee_cid = $ratee_cid;
         $performance->rater_cid = $rater_cid;
@@ -86,10 +106,11 @@ class PerformanceController extends Controller
         $performance->position = $user->hr->Position;
         $performance->period_cover = $period_covered;
         $performance->department = $user->hr->DeptName;
-        $performance->doc_type = $user->hr->Head_Tag == 1 ? 1 : 2;
+        $performance->doc_type = $user->hr->Head_Tag == 0 ? 1 : 2;
+        $performance->filename = $newFileName;
         $performance->save();
 
-
+       
         $agreements = agreement::get();
         $perf_agreement = perf_agreement::find($performance->cid);
 
