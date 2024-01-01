@@ -179,7 +179,8 @@ return array(
         | having the appropriate fonts installed.
         |
         */
-        'autosize-method'             => PHPExcel_Shared_Font::AUTOSIZE_METHOD_APPROX,
+        'autosize-method' => \PhpOffice\PhpSpreadsheet\Shared\Font::AUTOSIZE_METHOD_APPROX,
+
 
         /*
         |--------------------------------------------------------------------------

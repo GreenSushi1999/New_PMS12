@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\hr;
 use DateTime;
-use App\excel;
 use App\grade;
 use App\ratings;
 use App\document;
@@ -20,8 +19,10 @@ use App\perf_indicatorsAve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel; 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class PerformanceController extends Controller
 {
@@ -97,6 +98,12 @@ class PerformanceController extends Controller
         $newFileName = $ratee_cid .  $doc_type . now()->format('Ymd_His') . '.xls'; 
         $newFilePath = storage_path('app/public/pms/' . $newFileName);
         copy($originalFilePath, $newFilePath);
+
+        $excel = IOFactory::load($newFilePath);
+        $excel->getActiveSheet()->setCellValue('C6', $user->hr->Name);
+        $writer = IOFactory::createWriter($excel, 'Xls');
+        $writer->save($newFilePath);
+        
 
         $performance = new performance();
         $performance->ratee_cid = $ratee_cid;
