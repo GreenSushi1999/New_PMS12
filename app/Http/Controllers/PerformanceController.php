@@ -19,10 +19,12 @@ use App\perf_indicatorsAve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel; 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PerformanceController extends Controller
 {
@@ -59,7 +61,7 @@ class PerformanceController extends Controller
         $op = hr::where('Dept', 'OP')->where('Head_Tag', 1)->first();
         $vpfa = hr::where('Dept', 'VPFA')->where('Head_Tag', 1)->first();
         $vpar = hr::where('Dept', 'VPAR')->where('Head_Tag', 1)->first();
- 
+
         if (Session::get('user')->hr->Head_Tag == 0) {
             $raters = hr::where('EmpNo', '<>', $user)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
         } elseif (Session::get('user')->hr->Head_Tag == 1) {
@@ -70,7 +72,7 @@ class PerformanceController extends Controller
         $perf_ratee = performance::where('ratee_cid', $user)->get();
         $perf_rater = performance::where('rater_cid', $user)->get();
         $perf_hr = performance::all();
-        return view('pages.index', compact('op', 'vpfa', 'vpar','raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
+        return view('pages.index', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
     }
     public function save_info(Request $request)
     {
@@ -83,28 +85,34 @@ class PerformanceController extends Controller
         $period_covered = $data['period_covered'];
 
 
-        
-        $doc_type = null; 
+
+        $doc_type = null;
         $originalFilePath = null;
 
-        if($user->hr->Head_Tag == 0 ) {
+        if ($user->hr->Head_Tag == 0) {
             $doc_type = '_Rank_';
-            $originalFilePath = storage_path('app/public/rank.xls');
-        }elseif($user->hr->Head_Tag == 1){
+            $originalFilePath = storage_path('app/public/Rank.xls');
+        } elseif ($user->hr->Head_Tag == 1) {
             $doc_type = '_Supervisory_';
-            $originalFilePath = storage_path('app/public/supervisory.xls');
+            $originalFilePath = storage_path('app/public/Supervisory.xls');
         }
-      
-        $newFileName = $ratee_cid .  $doc_type . now()->format('Ymd_His') . '.xls'; 
+
+        $newFileName = $ratee_cid . $doc_type . now()->format('Ymd_His') . '.xls';
         $newFilePath = storage_path('app/public/pms/' . $newFileName);
         copy($originalFilePath, $newFilePath);
 
-        $excel = IOFactory::load($newFilePath);
-        $excel->getActiveSheet()->setCellValue('C6', $user->hr->Name);
-        $writer = IOFactory::createWriter($excel, 'Xls');
-        $writer->save($newFilePath);
-        
 
+        $spreadsheet = IOFactory::load($newFilePath);
+
+        $spreadsheet->getActiveSheet()->setCellValue('C6', $user->hr->Name);
+        $spreadsheet->getActiveSheet()->setCellValue('C7', $user->hr->Position);
+        $spreadsheet->getActiveSheet()->setCellValue('C8', $user->hr->DeptName);
+        $spreadsheet->getActiveSheet()->setCellValue('H6', 'Employee No.:' . $user->EmpNo);
+        $spreadsheet->getActiveSheet()->setCellValue('H7', 'Period Covered:' . $period_covered);
+
+        // Save the modified spreadsheet
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($newFilePath);
         $performance = new performance();
         $performance->ratee_cid = $ratee_cid;
         $performance->rater_cid = $rater_cid;
@@ -117,7 +125,7 @@ class PerformanceController extends Controller
         $performance->filename = $newFileName;
         $performance->save();
 
-       
+
         $agreements = agreement::get();
         $perf_agreement = perf_agreement::find($performance->cid);
 
