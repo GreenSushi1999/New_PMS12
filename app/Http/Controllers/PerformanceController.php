@@ -81,14 +81,19 @@ class PerformanceController extends Controller
         $user = Session::get('user');
         $ratee_cid = $user->EmpNo;
         $rater_cid = $data['rater'];
-        $director_cid = $data['director'];
+        if ($user->hr->Head_Tag == 0) {
+            $director_cid = $data['director'];
+        }
+
         $op_cid = $data['op'];
         $period_covered = $data['period_covered'];
 
         $performance = new performance();
         $performance->ratee_cid = $ratee_cid;
         $performance->rater_cid = $rater_cid;
-        $performance->director_cid = $director_cid;
+        if ($user->hr->Head_Tag == 0) {
+            $performance->director_cid = $director_cid;
+        }
         $performance->op_cid = $op_cid;
         $performance->position = $user->hr->Position;
         $performance->period_cover = $period_covered;
