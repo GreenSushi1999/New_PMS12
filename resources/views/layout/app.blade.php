@@ -276,7 +276,8 @@
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn text-white" style="background-color:#343a40; ">
                         <i class="fa fa-bars"></i>
-                    </button>
+                    </button> 
+                  
                 </div>
             </nav>
 
