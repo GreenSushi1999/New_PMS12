@@ -32,7 +32,7 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-
+   
     <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
@@ -212,7 +212,7 @@
     <div class="wrapper">
 
         <nav id="sidebar"  >
-            <div class="d-flex align-items-center m-3">
+            <div class="d-flex align-items-center m-3 mt-4 mb-4 ">
                 <div class="me-3 mb-2">
                     <img src="{{asset('logo.png')}}" alt="" height="100px" width="100px" class="img-fluid">
                 </div>
@@ -223,7 +223,7 @@
             
             <ul class="list-unstyled CTAs">
                 <li class="active">
-                    <a href="/index" class="d-flex align-items-center text-decoration-none">
+                    <a href="/home" class="d-flex align-items-center text-decoration-none">
                         <i class="fa fa-user mr-2" style="margin-right:10px;font-size:18px;"></i> PMS
                     </a>
                 </li>
@@ -286,7 +286,8 @@
 
 
 
-        </div>
+        </div> 
+ 
         <script>
             $(document).ready(function() {
                 $('#sidebarCollapse').on('click', function() {

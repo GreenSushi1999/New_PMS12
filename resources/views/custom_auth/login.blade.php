@@ -61,14 +61,16 @@
                             <form action="{{ route('login') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="m-1">
+                                    <label for="" class="form-label" style="font-size:14px;font-weight:bold;">Employee Number:</label>
                                     <div class="input-group mb-2">
-                                        <input type="text"  name="EmpNo" class="form-control" placeholder="Employee No"   aria-describedby="basic-addon1">
+                                        <input type="text"  name="EmpNo" class="form-control" placeholder="Employee No."  aria-describedby="basic-addon1">
                                         <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-user"></i></span>
                                       </div>
                                 </div>
                                <div class="m-1">
+                                <label for="" class="form-label" style="font-size:14px;font-weight:bold;">Birthdate:</label>
                                 <div class="input-group mb-3">
-                                    <input type="password" class="form-control" name="Bdate" placeholder="Birthdate (MMDDYYYY)"  aria-describedby="basic-addon1">
+                                    <input type="password" class="form-control" name="Bdate" placeholder="MMDDYYYY"   aria-describedby="basic-addon1">
                                     <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-birthday-cake"></i></span>
                                   </div>
                                </div>
