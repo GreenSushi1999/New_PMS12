@@ -54,7 +54,7 @@
                                 <img src="logo.png" alt=""  height='150px' width='150px'>
                             </div>
                             <div class="text-center">
-                            <p class="text-muted font-weight-normal m-0" style="font-size:26px;">Performance Management <br>  
+                            <p class="text-dark font-weight-normal m-0" style="font-size:26px;">Performance Management <br>  
                                  System</p>
                             </div>
                         <div class="card-body">
@@ -62,13 +62,13 @@
                                 {{ csrf_field() }}
                                 <div class="m-1">
                                     <div class="input-group mb-2">
-                                        <input type="text" class="form-control" placeholder="Employee No" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text"  name="EmpNo" class="form-control" placeholder="Employee No"   aria-describedby="basic-addon1">
                                         <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-user"></i></span>
                                       </div>
                                 </div>
                                <div class="m-1">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Birthdate (MMDDYYYY)" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="password" class="form-control" name="Bdate" placeholder="Birthdate (MMDDYYYY)"  aria-describedby="basic-addon1">
                                     <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-birthday-cake"></i></span>
                                   </div>
                                </div>
