@@ -8,6 +8,6 @@ class grade extends Model
 {
 
     protected $primaryKey = 'cid';
-    protected $table = 'tblgrade';
+    protected $table = 'tblverbal';
     public $timestamps = true;
 }
