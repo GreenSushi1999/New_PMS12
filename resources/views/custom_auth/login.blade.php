@@ -50,34 +50,35 @@
             <div class="row justify-content-center align-item-center">
                 <div class="col-md-4">
                     <div class="card shadow">
-                        <div class="card-header bg-primary p-1 d-flex align-item-center justify-content-center">
-                            <h5 class="card-title text-white mt-2 ">EMPLOYEE PORTAL</h5>
-                        </div>
+                            <div class="mt-3 d-flex justify-content-center">
+                                <img src="logo.png" alt=""  height='150px' width='150px'>
+                            </div>
+                            <div class="text-center">
+                            <p class="text-muted font-weight-normal m-0" style="font-size:26px;">Performance Management <br>  
+                                 System</p>
+                            </div>
                         <div class="card-body">
                             <form action="{{ route('login') }}" method="POST">
                                 {{ csrf_field() }}
-                                <div class="form-group m-1">
-                                    <label for="EmpNo" class="form-label" style="font-weight:bold"
-                                        style="font-weight:bold">Employee No.</label>
-                                    <input type="text" name="EmpNo" class="form-control"
-                                        placeholder="Enter your employee number" required>
+                                <div class="m-1">
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" placeholder="Employee No" aria-label="Username" aria-describedby="basic-addon1">
+                                        <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                      </div>
                                 </div>
-                                <div class="form-group m-1">
-                                    <label for="Bdate" class="form-label" style="font-weight:bold">Birth Date
-                                        (MMDDYYYY)</label>
-                                    <input type="password" name="Bdate" class="form-control" placeholder="MMDDYYYY"
-                                        id="Bdate" required>
-
-                                </div>
-                                <div class="form-group mt-3">
+                               <div class="m-1">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Birthdate (MMDDYYYY)" aria-label="Username" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" style="width:40px;" id="basic-addon1"><i class="fa fa-birthday-cake"></i></span>
+                                  </div>
+                               </div>
                                     <div class="row m-1">
-                                        <button class="btn btn-primary  ">Login</button>
+                                        <button class="btn btn-success ">Login</button>
                                     </div>
-                                    <div class="row m-1">
-                                        <button class="btn btn-primary" type="button"
-                                            onclick="clearInputs()">Clear</button>
-                                    </div>
-                                </div>
+                                  <div class="row m-1">
+                                    <button class="btn btn-primary" type="button"
+                                    onclick="clearInputs()">Clear</button>
+                                  </div>
                             </form>
                         </div>
                     </div>
