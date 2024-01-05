@@ -40,6 +40,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <style>
@@ -281,16 +285,19 @@
 
 
         <div id="content">
-            <button type="button" id="sidebarCollapse" style="background-color:#343A40;" class="btn text-white">
-                <i class="fa fa-bars"></i>
-            </button>
+            <div class="d-flex justify-content-aside">
+                <div>
+                    <button type="button" id="sidebarCollapse" class="btn text-white me-2"
+                        style=" background: #343A40;">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
 
+                <h6 class="mt-1" style="color: #343A40;">Performance Management System</h6>
+            </div>
             <main>
                 @yield('content')
             </main>
-
-
-
         </div>
 
         <script>

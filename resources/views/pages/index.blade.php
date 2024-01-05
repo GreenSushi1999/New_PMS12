@@ -3,30 +3,29 @@
  @section('title', 'Performance Management System')
  @section('content')
 
+     <nav class="mt-3">
+         <div class="nav nav-tabs" id="nav-tab" role="tablist">
+             <button class="nav-link active" id="nav-ratee-tab" data-bs-toggle="tab" data-bs-target="#nav-ratee" type="button"
+                 role="tab" aria-controls="nav-ratee" aria-selected="true"><i class="fa fa-user me-2"></i>Ratee</button>
+
+             <button class="nav-link" id="nav-rater-tab" data-bs-toggle="tab" data-bs-target="#nav-rater" type="button"
+                 role="tab" aria-controls="nav-rater" aria-selected="false"><i class='fas fa-user-tie me-2'></i>
+                 Rater</button>
+             {{-- @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
+                 <button class="nav-link" id="nav-hcm-tab" data-bs-toggle="tab" data-bs-target="#nav-hcm" type="button"
+                     role="tab" aria-controls="nav-hcm" aria-selected="false">HCM</button>
+             @endif --}}
+         </div>
+     </nav>
 
      <div class="container mt-2">
          <div class="row card col-lg-12 justify-content-center align-item-center">
-             <div class="card-header text-white bg-primary d-flex align-items-center justify-content-center">
-                 <h4 class="card-title mt-2">Performance Management System</h4>
-             </div>
+
              <div class="card-body">
-                 <nav>
-                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                         <button class="nav-link active" id="nav-ratee-tab" data-bs-toggle="tab" data-bs-target="#nav-ratee"
-                             type="button" role="tab" aria-controls="nav-ratee" aria-selected="true">Ratee</button>
-                         <button class="nav-link" id="nav-rater-tab" data-bs-toggle="tab" data-bs-target="#nav-rater"
-                             type="button" role="tab" aria-controls="nav-rater" aria-selected="false">Rater</button>
 
-
-                         @if (Session::get('user')->hr->Dept_ID == 2469 || Session::get('user')->hr->Dept_ID == 713)
-                             <button class="nav-link" id="nav-hcm-tab" data-bs-toggle="tab" data-bs-target="#nav-hcm"
-                                 type="button" role="tab" aria-controls="nav-hcm" aria-selected="false">HCM</button>
-                         @endif
-                     </div>
-                 </nav>
                  <div class="tab-content" id="nav-tabContent">
                      <div class="tab-pane fade show active" id="nav-ratee" role="tabpanel" aria-labelledby="nav-ratee-tab">
-                         <div class="mt-4">
+                         <div class="mt-1">
                              <button class="btn btn-primary text-white" data-bs-toggle="modal"
                                  data-bs-target="#rateeForm_modal" id="newForm"> New
                                  Form</button>
