@@ -52,79 +52,47 @@
             <div class="row justify-content-center align-item-center">
                 <div class="col-lg-4">
                     <div class="card shadow">
-                        <<<<<<< HEAD=======<div class="mt-3 d-flex justify-content-center">
-                            <img src="logo.png" alt="" height='150px' width='150px'>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-dark font-weight-normal m-0" style="font-size:26px;">Performance Management <br>
-                            System</p>
-                    </div>
-                    >>>>>>> 96d17075f4f1c511d78184c7ce2bda4e2f5b5de4
-                    <div class="card-body">
-                        <div class="m-1 mt-3 d-flex justify-content-center">
-                            <img src="{{ asset('logo.png') }}" height="140px;" width="140px;" alt="">
-                        </div>
-                        <div class="text-center">
-                            <p class="font-weight-normal" style="font-size:28px;">Performance Management System</p>
-                        </div>
-                        <form action="{{ route('login') }}" method="POST">
-                            {{ csrf_field() }}
-                            <div class="m-1">
-                                <<<<<<< HEAD <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="EmpNo" placeholder="Employee No."
-                                        aria-label="Recipient's username" aria-describedby="basic-addon2" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
-                                                class='fas fa-user-tie'></i></span>
+
+                        <div class="card-body">
+                            <div class="m-1 mt-3 d-flex justify-content-center">
+                                <img src="{{ asset('logo.png') }}" height="140px;" width="140px;" alt="">
+                            </div>
+                            <div class="text-center">
+                                <p class="font-weight-normal" style="font-size:28px;">Performance Management System</p>
+                            </div>
+                            <form action="{{ route('login') }}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="m-1">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="EmpNo"
+                                            placeholder="Employee No." aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
+                                                    class='fas fa-user-tie'></i></span>
+                                        </div>
                                     </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="password" class="form-control" name="Bdate"
-                                    placeholder="Birthdate [MMDDYYYY]" aria-describedby="basic-addon2" required>
-                                <div class="input-group-append">
-                                    <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
-                                            class='fas fa-birthday-cake'></i></span>
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" name="Bdate"
+                                            placeholder="Birthdate [MMDDYYYY]" aria-describedby="basic-addon2" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
+                                                    class='fas fa-birthday-cake'></i></span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                    </div>
-                    <div class="row m-1">
-                        <button class="btn btn-success ">Login</button>
-                    </div>
-                    <div class="row m-1">
-                        <button class="btn btn-primary" type="button" onclick="clearInputs()">Clear</button>
-                    </div>
-                    =======
-                    <label for="" class="form-label" style="font-size:14px;font-weight:bold;">Employee
-                        Number:</label>
-                    <div class="input-group mb-2">
-                        <input type="text" name="EmpNo" class="form-control" placeholder="Employee No."
-                            aria-describedby="basic-addon1">
-                        <span class="input-group-text" style="width:40px;" id="basic-addon1"><i
-                                class="fa fa-user"></i></span>
+                                <div class="row m-1">
+                                    <button class="btn btn-success ">Login</button>
+                                </div>
+                                <div class="row m-1">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="clearInputs()">Clear</button>
+                                </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="m-1">
-                    <label for="" class="form-label" style="font-size:14px;font-weight:bold;">Birthdate:</label>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="Bdate" placeholder="MMDDYYYY"
-                            aria-describedby="basic-addon1">
-                        <span class="input-group-text" style="width:40px;" id="basic-addon1"><i
-                                class="fa fa-birthday-cake"></i></span>
-                    </div>
-                </div>
-                <div class="row m-1">
-                    <button class="btn btn-success ">Login</button>
-                </div>
-                <div class="row m-1">
-                    <button class="btn btn-primary" type="button" onclick="clearInputs()">Clear</button>
-                </div>
-                </form>
-                >>>>>>> 96d17075f4f1c511d78184c7ce2bda4e2f5b5de4
             </div>
-            </form>
-        </div>
-        </div>
-        </div>
         </div>
         </div>
     </main>
