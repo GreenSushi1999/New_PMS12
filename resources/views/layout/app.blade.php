@@ -289,7 +289,8 @@
                     <button type="button" id="sidebarCollapse" class="btn text-white me-2"
                         style=" background: #343A40;">
                         <i class="fa fa-bars"></i>
-                    </button>
+                    </button> 
+                  
                 </div>
 
 
