@@ -68,8 +68,8 @@ class PerformanceController extends Controller
         }
         $documents = document::get();
         $HRS = hr::get();
-        $perf_ratee = performance::where('ratee_cid', $user)->get();
-        $perf_rater = performance::where('rater_cid', $user)->get();
+        $perf_ratee = performance::where('ratee_cid', $user)->orderBy('created_at','desc')->get();
+        $perf_rater = performance::where('rater_cid', $user)->orderBy('created_at','desc')->get();
         $perf_hr = performance::all();
         return view('pages.index', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
     }
