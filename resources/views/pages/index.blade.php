@@ -37,7 +37,7 @@
                      <div class="card-header bg-primary">
                          <h6 class="text-white card-title mt-1">Ratee Forms</h6>
                      </div>
-                     <div class="card-body p-2" style="height:75vh;">
+                     <div class="card-body p-2  " style="height:75vh;">
                          <div style="height:73vh;background:#D6D8DA;overflow:scroll;">
 
                              @foreach ($perf_ratee as $perform)
@@ -61,9 +61,8 @@
              <div class="col-lg-11  tab-pane fade  " id="nav-rater" role="tabpanel" aria-labelledby="nav-rater-tab">
                  <div class="row">
                      <div class="col">
-                         <div>
-                             <input type="text" class="form-control " style="max-width:300px;" placeholder="Search "
-                                 name="searchPMS">
+                         <div class="">
+                             <input type="text" class="form-control " placeholder="Search " name="searchPMS">
                          </div>
                      </div>
                  </div>
@@ -86,7 +85,6 @@
                                      </div>
                                  </a>
                              @endforeach
-
 
                          </div>
                      </div>
