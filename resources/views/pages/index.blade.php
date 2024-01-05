@@ -3,6 +3,7 @@
  @section('title', 'Performance Management System')
  @section('content')
 
+
      <nav class="mt-3">
          <div class="nav nav-tabs" id="nav-tab" role="tablist">
              <button class="nav-link active" id="nav-ratee-tab" data-bs-toggle="tab" data-bs-target="#nav-ratee" type="button"
@@ -52,8 +53,6 @@
                                      </div>
                                  </a>
                              @endforeach
-
-
                          </div>
                      </div>
                  </div>
@@ -70,7 +69,7 @@
 
                  <div class="card mt-2  ">
                      <div class="card-header bg-primary">
-                         <h6 class="text-white card-title mt-1">Ratee Forms</h6>
+                         <h6 class="text-white card-title mt-1">Rater Forms</h6>
                      </div>
                      <div class="card-body p-2" style="height:75vh;">
                          <div style="height:73vh;background:#D6D8DA;overflow:scroll;">
@@ -145,7 +144,7 @@
                          @endif
                          <div class="mb-3">
                              <label for="op" class="form-label">OP / VPFA / VPAR:</label>
-                             <select class="form-select " id="op" name="op" aria-label="Select input"
+                             <select class="form-select" id="op" name="op" aria-label="Select input"
                                  required>
                                  <option selected disabled>Select an option</option>
                                  <option value="{{ $op->EmpNo }}">{{ $op->Name }}</option>
@@ -166,6 +165,7 @@
 
      <script>
          $(document).ready(function() {
+             $('.select2').select2();
              $('#newForm').on('click', function() {
                  $('#ratee_modal').modal('hide');
              });
