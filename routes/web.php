@@ -20,7 +20,7 @@ Route::middleware(['web', 'auth.check'])->group(function () {
 Route::get('/logout', 'PerformanceController@logout')->name('logout');
 
 Route::middleware(['web', 'custom.auth'])->group(function () {
-    Route::get('/index', 'PerformanceController@index');
+    Route::get('/home', 'PerformanceController@index');
     Route::post('/access-performance', 'PerformanceController@access_performacne')->name('access-performance');
     Route::post('/move-info', 'PerformanceController@move_info')->name('move-info');
     Route::post('/save-info', 'PerformanceController@save_info')->name('save-info');
@@ -62,6 +62,5 @@ Route::get('/get-supervisory-values', 'PerformanceController@getSuperValues')->n
 Route::get('/get-supervisory-criteria', 'PerformanceController@getSuperCriteria')->name('get-Supercriteria');
 
 
-
-
- 
+Route::get('/ratee','PerformanceController@ratee')->name('ratee');
+Route::get('/rater','PerformanceController@rater')->name('rater');

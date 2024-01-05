@@ -47,7 +47,7 @@ class PerformanceController extends Controller
 
         if ($employee) {
             Session::put('user', $employee);
-            return redirect('/index');
+            return redirect('/home');
         }
 
         return back()->with('error', 'Invalid credentials');
@@ -71,7 +71,7 @@ class PerformanceController extends Controller
         $perf_ratee = performance::where('ratee_cid', $user)->get();
         $perf_rater = performance::where('rater_cid', $user)->get();
         $perf_hr = performance::all();
-        return view('pages.index', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
+        return view('pages.home', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
     }
     public function save_info(Request $request)
     {
@@ -629,6 +629,46 @@ class PerformanceController extends Controller
         return response()->json($evaluationData);
     }
 
+    public function ratee(){
 
+        $user = Session::get('user')->EmpNo;
+        $op = hr::where('Dept', 'OP')->where('Head_Tag', 1)->first();
+        $vpfa = hr::where('Dept', 'VPFA')->where('Head_Tag', 1)->first();
+        $vpar = hr::where('Dept', 'VPAR')->where('Head_Tag', 1)->first();
+
+        if (Session::get('user')->hr->Head_Tag == 0) {
+            $raters = hr::where('EmpNo', '<>', $user)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
+        } elseif (Session::get('user')->hr->Head_Tag == 1) {
+            $raters = hr::where('EmpNo', '<>', $user)->where('Dept_ID', '<>', Session::get('user')->hr->Dept_ID)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
+        }
+        $documents = document::get();
+        $HRS = hr::get();
+        $perf_ratee = performance::where('ratee_cid', $user)->get();
+        $perf_rater = performance::where('rater_cid', $user)->get();
+        $perf_hr = performance::all();
+        return view('pages.ratee', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
+        
+    }
+
+    public function rater(){
+
+        $user = Session::get('user')->EmpNo;
+        $op = hr::where('Dept', 'OP')->where('Head_Tag', 1)->first();
+        $vpfa = hr::where('Dept', 'VPFA')->where('Head_Tag', 1)->first();
+        $vpar = hr::where('Dept', 'VPAR')->where('Head_Tag', 1)->first();
+
+        if (Session::get('user')->hr->Head_Tag == 0) {
+            $raters = hr::where('EmpNo', '<>', $user)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
+        } elseif (Session::get('user')->hr->Head_Tag == 1) {
+            $raters = hr::where('EmpNo', '<>', $user)->where('Dept_ID', '<>', Session::get('user')->hr->Dept_ID)->where('Dir_ID', Session::get('user')->hr->Dir_ID)->get();
+        }
+        $documents = document::get();
+        $HRS = hr::get();
+        $perf_ratee = performance::where('ratee_cid', $user)->get();
+        $perf_rater = performance::where('rater_cid', $user)->get();
+        $perf_hr = performance::all();
+        return view('pages.rater', compact('op', 'vpfa', 'vpar', 'raters', 'HRS', 'documents', 'perf_ratee', 'perf_rater', 'perf_hr'));
+        
+    }
 
 }
