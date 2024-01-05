@@ -98,7 +98,7 @@
         min-width: 250px;
         max-width: 250px;
         background: #343A40;
-        color: #fff;
+        color: #C2C7D0;
         transition: all 0.3s;
     }
 
@@ -118,7 +118,7 @@
     }
 
     #sidebar ul p {
-        color: #fff;
+        color: #C2C7D0;
         padding: 10px;
     }
 
@@ -130,14 +130,14 @@
 
     #sidebar ul li a:hover {
 
-        color: #0D6EFD;
-        background: #fff;
+        color: #fff;
+
     }
 
     #sidebar ul li.active>a,
     a[aria-expanded="true"] {
-        color: #0D6EFD;
-        background: #fff;
+        background: #0D6EFD;
+        color: #fff;
     }
 
     a[data-toggle="collapse"] {
@@ -211,35 +211,25 @@
 
     <div class="wrapper">
 
-        <nav id="sidebar" class="bg-primary">
-            <div class="sidebar-header mt-2 bg-primary">
-                <h4>Employee Portal</h4>
+        <nav id="sidebar">
+            <div class="sidebar-header mt-2 ">
+                <div class="d-flex justify-content-between">
+                    <img src="{{ asset('logo.png') }}" alt="" height="50px;" width="50px;" class="me-2">
+                    <h6>Performance Management System</h6>
+                </div>
+
             </div>
 
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="#" class="d-flex align-items-center text-decoration-none ">
-                        <i class="fa fa-calendar mr-2" style="margin-right:10px;font-size:18px;"></i> Attendance
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-suitcase mr-2" style="margin-right:10px;font-size:18px;"></i> Leave Request
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-users mr-2" style="margin-right:10px;font-size:18px;"></i> Admin Request
-                    </a>
-                </li>
+
                 <li class="active">
                     <a href="/index" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-user mr-2" style="margin-right:10px;font-size:18px;"></i> PMS
+                        <i class="fa fa-file-text" style="margin-right:10px;font-size:18px;"></i> PMS
                     </a>
                 </li>
                 <li>
                     <a href="#" class="d-flex align-items-center text-decoration-none ">
-                        <i class="fa fa-download mr-2" style="margin-right:10px;font-size:18px;"></i> Downloadable Forms
+                        <i class="fa fa-cog mr-2" style="margin-right:10px;font-size:18px;"></i> Edit PMS
                     </a>
                 </li>
                 <li>
@@ -251,7 +241,7 @@
 
 
 
-            <div class="bg-white border border-primary d-flex flex-column align-items-center m-4 rounded p-1">
+            <div class="bg-white d-flex flex-column align-items-center m-4 rounded p-1">
                 <span class="text-dark" style="font-size:12px;font-weight:bold;">
                     {{ Session::get('user')->LastName . ',' . Session::get('user')->FirstName }}
                 </span>

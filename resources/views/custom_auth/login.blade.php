@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Optional theme -->
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -48,45 +50,54 @@
     <main>
         <div class="container mt-5">
             <div class="row justify-content-center align-item-center">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="card shadow">
-                        <div class="card-header bg-primary p-1 d-flex align-item-center justify-content-center">
-                            <h5 class="card-title text-white mt-2 ">EMPLOYEE PORTAL</h5>
-                        </div>
+
                         <div class="card-body">
+                            <div class="m-1 mt-3 d-flex justify-content-center">
+                                <img src="{{ asset('logo.png') }}" height="140px;" width="140px;" alt="">
+                            </div>
+                            <div class="text-center">
+                                <p class="font-weight-normal" style="font-size:28px;">Performance Management System</p>
+                            </div>
                             <form action="{{ route('login') }}" method="POST">
                                 {{ csrf_field() }}
-                                <div class="form-group m-1">
-                                    <label for="EmpNo" class="form-label" style="font-weight:bold"
-                                        style="font-weight:bold">Employee No.</label>
-                                    <input type="text" name="EmpNo" class="form-control"
-                                        placeholder="Enter your employee number" required>
-                                </div>
-                                <div class="form-group m-1">
-                                    <label for="Bdate" class="form-label" style="font-weight:bold">Birth Date
-                                        (MMDDYYYY)</label>
-                                    <input type="password" name="Bdate" class="form-control" placeholder="MMDDYYYY"
-                                        id="Bdate" required>
-
-                                </div>
-                                <div class="form-group mt-3">
-                                    <div class="row m-1">
-                                        <button class="btn btn-primary  ">Login</button>
+                                <div class="m-1">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="EmpNo"
+                                            placeholder="Employee No." aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
+                                                    class='fas fa-user-tie'></i></span>
+                                        </div>
                                     </div>
-                                    <div class="row m-1">
-                                        <button class="btn btn-primary" type="button"
-                                            onclick="clearInputs()">Clear</button>
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" name="Bdate"
+                                            placeholder="Birthdate [MMDDYYYY]" aria-describedby="basic-addon2" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="padding:12px;" id="basic-addon2"><i
+                                                    class='fas fa-birthday-cake'></i></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="row m-1">
+                                    <button class="btn btn-success ">Login</button>
+                                </div>
+                                <div class="row m-1">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="clearInputs()">Clear</button>
+                                </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </main>
 
-
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
