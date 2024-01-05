@@ -32,7 +32,7 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-   
+
     <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
@@ -40,6 +40,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 
 <style>
@@ -97,8 +103,8 @@
     #sidebar {
         min-width: 250px;
         max-width: 250px;
-        background: #343a40;
-        color: #fff;
+        background: #343A40;
+        color: #C2C7D0;
         transition: all 0.3s;
     }
 
@@ -118,7 +124,7 @@
     }
 
     #sidebar ul p {
-        color: #fff;
+        color: #C2C7D0;
         padding: 10px;
     }
 
@@ -130,14 +136,16 @@
 
     #sidebar ul li a:hover {
 
-        color:#198754;
-        background: #fff;
+        color: #fff;
+
+
     }
 
     #sidebar ul li.active>a,
     a[aria-expanded="true"] {
-        color: #198754;
-        background: #fff;
+        background: #0D6EFD;
+        color: #fff;
+
     }
 
     a[data-toggle="collapse"] {
@@ -211,23 +219,29 @@
 
     <div class="wrapper">
 
-        <nav id="sidebar"  >
-            <div class="d-flex align-items-center m-3 mt-4 mb-4 ">
-                <div class="me-3 mb-2">
-                    <img src="{{asset('logo.png')}}" alt="" height="100px" width="100px" class="img-fluid">
-                </div>
-                <div>
+        <nav id="sidebar">
+            <div class="sidebar-header mt-2 ">
+                <div class="d-flex justify-content-between">
+                    <img src="{{ asset('logo.png') }}" alt="" height="50px;" width="50px;" class="me-2">
                     <h6>Performance Management System</h6>
                 </div>
+
+
             </div>
-            
+
             <ul class="list-unstyled CTAs">
                 <li class="active">
                     <a href="/home" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-user mr-2" style="margin-right:10px;font-size:18px;"></i> PMS
+                        <i class="fa fa-file-text" style="margin-right:10px;font-size:18px;"></i> PMS
                     </a>
                 </li>
                 <li>
+                    <a href="/editPMS" class="d-flex align-items-center text-decoration-none ">
+                        <i class="fa fa-cog mr-2" style="margin-right:10px;font-size:18px;"></i> Edit PMS
+                    </a>
+                </li>
+                <li>
+
                     <a href="/logout" class="d-flex align-items-center text-decoration-none ">
                         <i class="fa fa-sign-out mr-2" style="margin-right:10px;font-size:18px;"></i> Logout
                     </a>
@@ -236,7 +250,8 @@
 
 
 
-            <div class="bg-white border border-success d-flex flex-column align-items-center m-4 rounded p-1">
+            <div class="bg-white d-flex flex-column align-items-center m-4 rounded p-1">
+
                 <span class="text-dark" style="font-size:12px;font-weight:bold;">
                     {{ Session::get('user')->LastName . ',' . Session::get('user')->FirstName }}
                 </span>
@@ -272,23 +287,22 @@
 
 
         <div id="content">
-            <nav class="navbar navbar-expand-md navbar-light rounded">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn text-white" style="background-color:#343a40; ">
+            <div class="d-flex justify-content-aside">
+                <div>
+                    <button type="button" id="sidebarCollapse" class="btn text-white me-2"
+                        style=" background: #343A40;">
                         <i class="fa fa-bars"></i>
                     </button> 
                   
                 </div>
-            </nav>
 
+
+            </div>
             <main>
                 @yield('content')
             </main>
+        </div>
 
-
-
-        </div> 
- 
         <script>
             $(document).ready(function() {
                 $('#sidebarCollapse').on('click', function() {
