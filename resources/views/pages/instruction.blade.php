@@ -6,7 +6,7 @@
 
 
 
-    <div class="container mt-5">
+    <div class="container mt-1">
         <div class="row justify-content-center align-item-center">
             <div class="col-md-10">
                 <div class="card shadow">
@@ -29,8 +29,6 @@
 
 
                         </div>
-
-
 
                         <div class="card m-1 bg-primary">
                             <div class="card-header">
@@ -110,7 +108,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="performance_cid" value="{{ $performance_cid }}">
                             <input type="hidden" name="ratee_cid" value="{{ $ratee_cid }}">
-                            <a href="/index" class="btn btn-success">Back</a>
+                            <a href="/home" class="btn btn-secondary">Back</a>
                             <button class="btn btn-primary " type="submit">Start</button>
                         </form>
                     </div>

@@ -44,6 +44,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 
 <style>
@@ -229,12 +231,12 @@
 
             <ul class="list-unstyled CTAs">
                 <li class="active">
-                    <a href="/index" class="d-flex align-items-center text-decoration-none">
+                    <a href="/home" class="d-flex align-items-center text-decoration-none">
                         <i class="fa fa-file-text" style="margin-right:10px;font-size:18px;"></i> PMS
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="d-flex align-items-center text-decoration-none ">
+                    <a href="/editPMS" class="d-flex align-items-center text-decoration-none ">
                         <i class="fa fa-cog mr-2" style="margin-right:10px;font-size:18px;"></i> Edit PMS
                     </a>
                 </li>
@@ -293,7 +295,7 @@
                     </button>
                 </div>
 
-                <h6 class="mt-1" style="color: #343A40;">Performance Management System</h6>
+
             </div>
             <main>
                 @yield('content')
