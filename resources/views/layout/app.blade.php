@@ -277,13 +277,10 @@
 
 
         <div id="content">
-            <nav class="navbar navbar-expand-md navbar-light rounded">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary text-white">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </div>
-            </nav>
+
+            <button type="button" id="sidebarCollapse" style="background-color:#343A40;" class="btn text-white">
+                <i class="fa fa-bars"></i>
+            </button>
 
             <main>
                 @yield('content')
