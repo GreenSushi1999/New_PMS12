@@ -23,7 +23,7 @@
         <h6 class="card-title mt-1 text-white">Preview</h6>
     </div> 
     <div class="card-body">  
-        <div class="col-4 mb-2">
+        <div class="col mb-2">
             <select name="" id="" class="form-select"  > 
                 <option value="">Rank and File Level</option>
                 <option value="">Supervisory/Officer Level</option>
@@ -45,8 +45,94 @@
                     <th class="text-center">RATER</th>
                 </tr>
             </thead>
-           
- 
+           <tbody>
+            <tr>
+                <td>a. Freedom from errors and mistakes.</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>b. Exhibits breadth, depth and leadership of his/her area of expertise.</td> 
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>c. Produces useful and timely outputs and contributes to the attainment of objectives.</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    d. Mentors colleagues when needed.
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>e. Self-starter on professional development to maintain up-to-date knowledge of concepts and practices related to area of work. (Base on
+                    employee's professional development effort such as attendance to trainings, and further studies.).</td> 
+                    <td></td>
+                    <td></td>
+            </tr>
+            <tr>
+                <td rowspan="2">Critical Incident:</td>
+              <td colspan="2" class="text-center"> Average x 0.15
+              </td>
+            </tr>
+            <tr>
+                <td></td> 
+                <td></td>
+              
+            </tr>
+            <tr>
+                <td><b>OVERALL WEIGHTED AVERAGE</b></td> 
+                <td></td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td><b>FINAL RANKING</b></td> 
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><b>VERBAL INTERPRETATION</b></td> 
+                <td colspan="2"></td>
+                 
+            </tr>
+           </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr><th class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr><th class="text-center" colspan="2">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
+                <tr><th class="text-center">AREA/S FOR IMPROVEMENT</th>
+                    <th class="text-center">ACTION PLAN</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height:240px;"></td>
+                </tr>
+            </tbody>
         </table>
     </div>
  </div>

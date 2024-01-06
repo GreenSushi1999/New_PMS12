@@ -2,7 +2,7 @@
 
 @section('title', 'Performance Management System')
 @section('content')
-    {{-- <div class="container mt-5">
+    <div class="container mt-5">
         <div class="row justify-content-center align-item-center">
             <div class="col-md-10">
                 <div class="card shadow">
