@@ -11,12 +11,12 @@
     <button class="btn btn-success">Set as Default </button>
    </div>
  </div>
-<div class="bg-white mt-2">  
-        <select name="" id="" class="form-select" > 
-            <option value="">Version 2023 [Default]</option>
-            <option value="">Version 2024</option>
-            <option value="">Version 2025</option>
-             </select>
+<div class="bg-white mt-2">   
+    <select name="version" id="versionSelect" class="form-select">
+        @foreach ($version as $v)
+        <option value="{{$v->cid}}" {{$v->status == 1 ?  'selected': '' }}>{{$v->ver_name}} {{$v->status == 1 ? '[Default]' : ''}}</option>
+        @endforeach
+    </select>
 </div>
  <div class="card mt-2">
     <div class="card-header bg-primary">
@@ -24,87 +24,21 @@
     </div> 
     <div class="card-body">  
         <div class="col mb-2">
-            <select name="" id="" class="form-select"  > 
-                <option value="">Rank and File Level</option>
-                <option value="">Supervisory/Officer Level</option>
+            <select name="document" id="documentSelect" class="form-select"> 
+                <option value="" selected disabled>Select</option>
+                @foreach ($document as $d)
+                <option value="{{$d->cid}}">{{$d->doc_name}}</option>
+                @endforeach
             </select>
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="text-center">Indicators</th>
-                    <th colspan="2" class="text-center">Ratings</th>
-                </tr>
-                <tr> 
-                    <th>PART I. VALUES INDICATOR</th> 
-                    <th colspan="2"class="text-center"><i>WEIGHT (100%)</i></th>
-                </tr>
-                <tr>
-                    <th>1.COMPETENT (15%)</th>
-                    <th class="text-center">RATEE</th>
-                    <th class="text-center">RATER</th>
-                </tr>
-            </thead>
+        <table id="tval" class="table table-bordered">
+            <thead  >
+           
            <tbody>
-            <tr>
-                <td>a. Freedom from errors and mistakes.</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>b. Exhibits breadth, depth and leadership of his/her area of expertise.</td> 
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>c. Produces useful and timely outputs and contributes to the attainment of objectives.</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    d. Mentors colleagues when needed.
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>e. Self-starter on professional development to maintain up-to-date knowledge of concepts and practices related to area of work. (Base on
-                    employee's professional development effort such as attendance to trainings, and further studies.).</td> 
-                    <td></td>
-                    <td></td>
-            </tr>
-            <tr>
-                <td rowspan="2">Critical Incident:</td>
-              <td colspan="2" class="text-center"> Average x 0.15
-              </td>
-            </tr>
-            <tr>
-                <td></td> 
-                <td></td>
-              
-            </tr>
-            <tr>
-                <td><b>OVERALL WEIGHTED AVERAGE</b></td> 
-                <td></td>
-                <td> </td>
-            </tr>
-            <tr>
-                <td><b>FINAL RANKING</b></td> 
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><b>VERBAL INTERPRETATION</b></td> 
-                <td colspan="2"></td>
-                 
-            </tr> 
-  
-            <tr>
-                <th colspan="3"></th>
-             </tr>
+     
            </tbody>
         </table> 
-        <table class="table table-bordered">
+        <table class="table table-bordered"  >
             <thead>
             <tr><th colspan="3" class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr> 
             </thead>
@@ -126,7 +60,7 @@
                 </tr>
             </tbody>
         </table> 
-        <table class="table table-bordered">
+        <table class="table table-bordered"  >
             <thead>
                 <tr><th class="text-center" colspan="2">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
                 <tr>
@@ -148,35 +82,22 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                $counter = 1;
+                @endphp
+                @foreach ($agreement as $a)
                 <tr>
                     <td>
-                        a. All the ratings have been discussed with me by my superior.
+                        {{ chr($counter + 96) }}.  {{$a->agreement}}
                     </td>
                     <td>Yes <input type="checkbox" class="form-check-input"></td>
                     <td>No <input type="checkbox" class="form-check-input"></td>
                 </tr>
-                <tr>
-                    <td>
-                        b. I strongly agree with all the ratings.
-                    </td>
-                    <td>Yes <input type="checkbox" class="form-check-input"></td>
-                    <td>No <input type="checkbox" class="form-check-input"></td>
-                </tr>
-                <tr>
-                    <td>
-                        c. Some of the statements do not clearly describe my performance; though ratings are generally fair.
-                    </td>
-                    <td>Yes <input type="checkbox" class="form-check-input"></td>
-                    <td>No <input type="checkbox" class="form-check-input"></td>
-                </tr>
-                <tr>
-                    <td>
-                        d. I have reservations and objections against this rating.
-                    </td>
-                    <td>Yes <input type="checkbox" class="form-check-input"></td>
-                    <td>No <input type="checkbox" class="form-check-input"></td>
-                </tr>
-                
+                @php
+                $counter++;
+            @endphp
+                @endforeach
+              
             </tbody>
 
          </table>
@@ -191,4 +112,99 @@
     });
 
 </script>
+<script>
+    $(document).ready(function() {
+        // Handle change event for the version select dropdown
+        $('#versionSelect, #documentSelect').change(function() {
+            var selectedVersion = $('#versionSelect').val();
+            var selectedDocument = $('#documentSelect').val();
+            
+            // Make an Ajax call only if both version and document are selected
+            if (selectedVersion && selectedDocument) {
+                $.ajax({
+                    url: '{{ route('fetch-values') }}',
+                    method: 'GET',
+                    data: {
+                        version: selectedVersion,
+                        document: selectedDocument
+                    },
+                    success: function(response) {
+                        var tbody = $('#tval tbody');
+                        tbody.empty();
+
+                        var thead = $('#tval thead');
+                        thead.empty(); 
+                        var footer = '<tr>' +
+                            '<td><b>OVERALL WEIGHTED AVERAGE</b></td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td><b>FINAL RANKING</b></td>' +
+                            '<td colspan="2"></td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td><b>VERBAL INTERPRETATION</b></td>' +
+                            '<td colspan="2"></td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<th colspan="3"></th>' +
+                            '</tr>';
+
+                        // Generate the table header
+                        thead.append('<tr>' +
+                            '<th class="text-center">Indicators</th>' +
+                            '<th colspan="2" class="text-center">Ratings</th>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<th>PART I. VALUES INDICATOR</th>' +
+                            '<th colspan="2" class="text-center"><i>WEIGHT (100%)</i></th>' +
+                            '</tr>');
+
+                        // Generate the table body
+                        $.each(response, function(index, value) {
+                            var row = '<tr>' +
+                                '<th>' + (index + 1) + '. ' + value.value + ' (' + value.percentage + '%)</th>' +
+                                '<th class="text-center">RATEE</th>' +
+                                '<th class="text-center">RATER</th>' +
+                                '</tr>';
+
+                            $.each(value.criteria, function(i, criteria) {
+                                row += '<tr>' +
+                                    '<td>' + String.fromCharCode(97 + i) + '. ' + criteria.criteria +
+                                    (criteria.remarks == 1 ? '<br> Remarks:' : '') +
+                                    '</td>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '</tr>';
+                            });
+
+                            if (value.critical_incident == 1) {
+                                row += '<tr>' +
+                                    '<td rowspan="2">Critical Incident:</td>' +
+                                    '<td colspan="2" class="text-center"> Average x '+ value.percentage +'% </td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '</tr>';
+                            }
+
+                            tbody.append(row);  
+                            tbody.append(footer);
+                        });
+                 
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+ 
 @endsection

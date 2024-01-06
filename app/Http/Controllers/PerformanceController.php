@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\hr;
 use DateTime;
 use App\grade;
+use App\values;
 use App\ratings;
+use App\version;
+use App\criteria;
 use App\document;
 use App\agreement;
 use App\employees;
@@ -629,7 +632,29 @@ class PerformanceController extends Controller
         return response()->json($evaluationData);
     }
  
-    public function settings(){
-        return view('pages.settings');
+    public function settings(){ 
+
+        $version = version::all(); 
+        $document = document::all();
+        $values = values::orderBy('ord', 'asc')->get();
+        $criteria = criteria::orderBy('ord', 'asc')->get(); 
+        $agreement = agreement::orderBy('ord','asc')->get();
+        return view('pages.settings', compact('version','document','values','criteria','agreement') );
     }
+    public function fetchDataForTable(Request $request)
+    {
+        // Retrieve the selected version and document from the request
+        $selectedVersion = $request->input('version');
+        $selectedDocument = $request->input('document');
+
+        // Fetch data from the 'values' table based on the selected version and document
+        $values = values::where('ver_cid', $selectedVersion)
+            ->where('doc_cid', $selectedDocument)
+            ->orderBy('ord', 'asc')
+            ->with('criteria')
+            ->get(); 
+
+        return response()->json($values);
+    }
+    
 }

@@ -62,3 +62,8 @@ Route::get('/get-supervisory-values', 'PerformanceController@getSuperValues')->n
 Route::get('/get-supervisory-criteria', 'PerformanceController@getSuperCriteria')->name('get-Supercriteria');
 
 Route::get('/settings', 'PerformanceController@settings'); 
+
+// routes/web.php
+ 
+
+Route::get('/fetch-data-for-table',  'PerformanceController@fetchDataForTable')->name('fetch-values');
