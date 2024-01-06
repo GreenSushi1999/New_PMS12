@@ -97,42 +97,37 @@
                 <td><b>VERBAL INTERPRETATION</b></td> 
                 <td colspan="2"></td>
                  
+            </tr> 
+     <tr>
+        <th colspan="3"></th>
+     </tr>
+            <tr><th colspan="3" class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr> 
+            <tr>
+                <td colspan="3">1</td>
             </tr>
-           </tbody>
-        </table>
-        <table class="table table-bordered">
-            <thead>
-                <tr><th class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-bordered">
-            <thead>
-                <tr><th class="text-center" colspan="2">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
-                <tr><th class="text-center">AREA/S FOR IMPROVEMENT</th>
-                    <th class="text-center">ACTION PLAN</th></tr>
-            </thead>
-            <tbody>
+            <tr>
+                <td colspan="3">2</td>
+            </tr>
+            <tr>
+                <td colspan="3">3</td>
+            </tr>
+            <tr>
+                <td colspan="3">4</td>
+            </tr>
+            <tr>
+                <td colspan="3">5</td>
+            </tr>
+            <tr>
+                <th colspan="3"></th>
+             </tr>
+            <tr><th class="text-center" colspan="3">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
+            <tr><th class="text-center">AREA/S FOR IMPROVEMENT</th>
+                <th colspan="2" class="text-center">ACTION PLAN</th></tr> 
                 <tr>
                     <td style="height:240px;"></td>
+                    <td colspan="2"></td>
                 </tr>
-            </tbody>
+           </tbody>
         </table>
     </div>
  </div>
