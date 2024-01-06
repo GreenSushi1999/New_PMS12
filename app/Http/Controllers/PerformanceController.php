@@ -628,5 +628,8 @@ class PerformanceController extends Controller
 
         return response()->json($evaluationData);
     }
-
+ 
+    public function settings(){
+        return view('pages.settings');
+    }
 }

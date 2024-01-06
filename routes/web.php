@@ -61,3 +61,4 @@ Route::post('/edit-supervisory-criteria', 'PerformanceController@edit_Supercrite
 Route::get('/get-supervisory-values', 'PerformanceController@getSuperValues')->name('get-Supervalues');
 Route::get('/get-supervisory-criteria', 'PerformanceController@getSuperCriteria')->name('get-Supercriteria');
 
+Route::get('/settings', 'PerformanceController@settings'); 

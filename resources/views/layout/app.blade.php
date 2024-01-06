@@ -227,14 +227,14 @@
             </div>
 
             <ul class="list-unstyled CTAs">
-                <li class="active">
-                    <a href="/home" class="d-flex align-items-center text-decoration-none">
-                        <i class="fa fa-file-text" style="margin-right:10px;font-size:18px;"></i> PMS
+                <li id="home">
+                    <a href="/home" class="d-flex align-items-center text-decoration-none ">
+                        <i class="fa fa-file-text" style="margin-right:10px;font-size:18px;"></i> Performance  
                     </a>
                 </li>
-                <li>
-                    <a href="/editPMS" class="d-flex align-items-center text-decoration-none ">
-                        <i class="fa fa-cog mr-2" style="margin-right:10px;font-size:18px;"></i> Edit PMS
+                <li id="settings">
+                    <a href="/settings" class="d-flex align-items-center text-decoration-none " >
+                        <i class="fa fa-cog mr-2" style="margin-right:10px;font-size:18px;"></i> Settings
                     </a>
                 </li>
                 <li>

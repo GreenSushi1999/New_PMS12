@@ -59,13 +59,19 @@
              </div>
 
              <div class="col-lg-11  tab-pane fade  " id="nav-rater" role="tabpanel" aria-labelledby="nav-rater-tab">
-                 <div class="row">
-                     <div class="col">
-                         <div class="">
-                             <input type="text" class="form-control " placeholder="Search " name="searchPMS">
-                         </div>
-                     </div>
-                 </div>
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-end">
+                            <input type="text" class="form-control " style="max-width:300px;" placeholder="Search "
+                                name="searchPMS">
+                        </div>
+                    </div>
+                </div>
 
                  <div class="card mt-2  ">
                      <div class="card-header bg-primary">
@@ -165,6 +171,9 @@
 
      <script>
          $(document).ready(function() {
+         
+             $('.list-unstyled.CTAs li').removeClass('active');
+             $('#home').addClass('active');
              $('.select2').select2();
              $('#newForm').on('click', function() {
                  $('#ratee_modal').modal('hide');
