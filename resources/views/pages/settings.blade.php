@@ -3,20 +3,20 @@
 @section('title', 'Performance Management System')
 @section('content')
 
-<div class="mt-3"> 
-        <button class="btn btn-primary">Create New Version</button> 
-</div>  
-<div class=" row bg-white mt-2"> 
-    <div class="col "> 
-        <select name="" id="" class="form-select"  > 
+ <div class="mt-2 row justify-content-between">  
+    <div class="col">
+        <button class="btn btn-primary">Create Version</button> 
+    </div>
+   <div class="col d-flex justify-content-end">
+    <button class="btn btn-success">Set as Default </button>
+   </div>
+ </div>
+<div class="bg-white mt-2">  
+        <select name="" id="" class="form-select" > 
             <option value="">Version 2023 [Default]</option>
             <option value="">Version 2024</option>
             <option value="">Version 2025</option>
              </select>
-    </div>
-<div class="col "> 
-    <button class="btn btn-success">Set as Default</button>
-</div>
 </div>
  <div class="card mt-2">
     <div class="card-header bg-primary">
@@ -98,37 +98,88 @@
                 <td colspan="2"></td>
                  
             </tr> 
-     <tr>
-        <th colspan="3"></th>
-     </tr>
-            <tr><th colspan="3" class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr> 
-            <tr>
-                <td colspan="3">1</td>
-            </tr>
-            <tr>
-                <td colspan="3">2</td>
-            </tr>
-            <tr>
-                <td colspan="3">3</td>
-            </tr>
-            <tr>
-                <td colspan="3">4</td>
-            </tr>
-            <tr>
-                <td colspan="3">5</td>
-            </tr>
+  
             <tr>
                 <th colspan="3"></th>
              </tr>
-            <tr><th class="text-center" colspan="3">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
-            <tr><th class="text-center">AREA/S FOR IMPROVEMENT</th>
-                <th colspan="2" class="text-center">ACTION PLAN</th></tr> 
-                <tr>
-                    <td style="height:240px;"></td>
-                    <td colspan="2"></td>
-                </tr>
            </tbody>
-        </table>
+        </table> 
+        <table class="table table-bordered">
+            <thead>
+            <tr><th colspan="3" class="text-center">PART II. RATEE’S ACHIEVEMENT/S FOR THIS PERIOD (Ratee and Rater may write inputs)</th></tr> 
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">1</td>
+                </tr>
+                <tr>
+                    <td colspan="3">2</td>
+                </tr>
+                <tr>
+                    <td colspan="3">3</td>
+                </tr>
+                <tr>
+                    <td colspan="3">4</td>
+                </tr>
+                <tr>
+                    <td colspan="3">5</td>
+                </tr>
+            </tbody>
+        </table> 
+        <table class="table table-bordered">
+            <thead>
+                <tr><th class="text-center" colspan="2">PART III. RATER'S COMMENTS AND RECOMMENDATIONS (Areas to Improve, Action Plan, among others)</th></tr>
+                <tr>
+                    <th style="width:320px;" class="text-center">AREA/S FOR IMPROVEMENT</th>
+                    <th  class="text-center">ACTION PLAN</th>
+                </tr> 
+            </thead>
+            <tbody>
+                <tr>
+                   <td style="height:250px;"></td> 
+                   <td></td>
+                </tr> 
+            </tbody>
+        </table>  
+         <table class="table">
+            <thead>
+                <tr >
+                    <td colspan="3"><b>Agreement </b>(To be accomplished by the Ratee and the Rater. <b>Tick</b> yes or no for your answer)</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        a. All the ratings have been discussed with me by my superior.
+                    </td>
+                    <td>Yes <input type="checkbox" class="form-check-input"></td>
+                    <td>No <input type="checkbox" class="form-check-input"></td>
+                </tr>
+                <tr>
+                    <td>
+                        b. I strongly agree with all the ratings.
+                    </td>
+                    <td>Yes <input type="checkbox" class="form-check-input"></td>
+                    <td>No <input type="checkbox" class="form-check-input"></td>
+                </tr>
+                <tr>
+                    <td>
+                        c. Some of the statements do not clearly describe my performance; though ratings are generally fair.
+                    </td>
+                    <td>Yes <input type="checkbox" class="form-check-input"></td>
+                    <td>No <input type="checkbox" class="form-check-input"></td>
+                </tr>
+                <tr>
+                    <td>
+                        d. I have reservations and objections against this rating.
+                    </td>
+                    <td>Yes <input type="checkbox" class="form-check-input"></td>
+                    <td>No <input type="checkbox" class="form-check-input"></td>
+                </tr>
+                
+            </tbody>
+
+         </table>
     </div>
  </div>
 
