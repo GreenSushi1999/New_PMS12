@@ -64,7 +64,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <button class="btn btn-primary text-white" id="openAddValues" type="button"> Add Value</button>
                     <form action="{{ route('edit-Rankvalues') }}" method="POST">
                         {{ csrf_field() }}

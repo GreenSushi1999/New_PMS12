@@ -646,15 +646,26 @@ class PerformanceController extends Controller
         // Retrieve the selected version and document from the request
         $selectedVersion = $request->input('version');
         $selectedDocument = $request->input('document');
-
+    
         // Fetch data from the 'values' table based on the selected version and document
         $values = values::where('ver_cid', $selectedVersion)
             ->where('doc_cid', $selectedDocument)
             ->orderBy('ord', 'asc')
             ->with('criteria')
-            ->get(); 
-
-        return response()->json($values);
+            ->get();
+    
+        // Fetch agreement data
+        $agreement = agreement::orderBy('ord', 'asc')->get();
+    
+        // Create an associative array to include both values and agreement data
+        $responseData = [
+            'values' => $values,
+            'agreement' => $agreement,
+        ];
+    
+        // Return the response
+        return response()->json($responseData);
     }
+    
     
 }
