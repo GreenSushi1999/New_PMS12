@@ -48,7 +48,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Edit File</h5>
+                <h5 class="modal-title" id="EditModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"> 
@@ -67,15 +67,28 @@
                         aria-labelledby="nav-values-tab"> 
                      <div class="mt-3">
                         <button class="btn btn-primary text-white" id="openAddValues" type="button"> Add Value</button>
+
+                        <table id="valuesTable" class="table table-bordered mt-2">
+                            <thead><tr><th class="col-lg-1">Order</th><th class="text-center">Values</th><th class="col-lg-1 text-center">Critical Incident</th><th class="col-lg-2 text-center">Percentage</th><th class="col-lg-1 text-center">Delete</th></tr></thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                      </div>
                 </div>
                 <div class="col-lg-11  tab-pane fade " id="nav-criteria" role="tabpanel"
                 aria-labelledby="nav-criteria-tab">  
 
-                <div class="mt-3">
+                <div class="mt-3" id="selectCriteria">
                     <select name="value" id="indicatorSelect" class="select2 form-select">
-                        <option value="" disabled selected>Select</option>
-                    </select>
+                        <option value=""disabled selected>Select</option>
+                    </select> 
+                    <div id="Addbtn_div" class="mt-2"><button type="button" class="btn btn-primary" id="openAddCriteria">Add Criteria</button>'</div>
+                    <table id="criteriaTable" class="table table-bordered mt-2"> 
+                        <thead><tr><th class="col-lg-1">Order</th><th class="text-center">Criteria</th><th class="col-lg-1 text-center">Remarks</th><th class="col-lg-1 text-center">Delete</th></tr></thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
                 </div>
                </div>
             </div>
@@ -100,12 +113,17 @@
 </script>
 <script>
     $(document).ready(function() {
-        // Handle change event for the version select dropdown
-        $('#versionSelect, #documentSelect').change(function() {
-            var selectedVersion = $('#versionSelect').val();
-            var selectedDocument = $('#documentSelect').val();
 
-            // Make an Ajax call only if both version and document are selected
+        $('#versionSelect, #documentSelect').change(function() {
+           
+            var selectedVersion = $('#versionSelect').val();
+            var selectedDocument = $('#documentSelect').val(); 
+
+             if (selectedDocument == 1) {
+                $('#EditModalLabel').text('Edit Rank and File Level');
+            } else if (selectedDocument == 2) {
+                $('#EditModalLabel').text('Edit Supervisory/Officer Level');
+            }
             if (selectedVersion && selectedDocument) {
                 $.ajax({
                     url: '{{ route('fetch-values') }}',
@@ -122,17 +140,23 @@
                         var tablesContainer = $('#tablesContainer'); 
                         var tablesData = '<table id="tval" class="table table-bordered"><thead></head><tbody></tbody></table> <table id="tachieve" class="table table-bordered"></table> <table id="tblrecommendation" class="table table-bordered"></table>  <table id="tblagree" class="table"></table>';
                         tablesContainer.empty();
+                        var ModalValuesbody = $('#valuesTable tbody');
+                            ModalValuesbody.empty(); 
 
-                        // Check if response is not equal to 0
-                        if (valuesData.length !== 0) {
+
+                            $('#indicatorSelect').empty();
+                            $('#indicatorSelect').append('<option value="" disabled selected> Select </option>');
+
+                        if (valuesData.length !== 0) {   
+
                             tablesContainer.append(tablesData);
-
                             var tbody = $('#tval tbody');
                             var thead = $('#tval thead');
                             var AchieveTable = $('#tachieve');
                             var recommendationTable = $('#tblrecommendation');
-                            var agreeTable = $('#tblagree');
-
+                            var agreeTable = $('#tblagree'); 
+                        
+                
                             var footer = '<tr>' +
                                 '<td><b>OVERALL WEIGHTED AVERAGE</b></td>' +
                                 '<td></td>' +
@@ -205,6 +229,9 @@
 
                             // Generate the table body
                             $.each(valuesData, function(index, value) {
+
+
+                                
                                 var row = '<tr>' +
                                     '<th>' + (index + 1) + '. ' + value.value + ' (' + value.percentage + '%)</th>' +
                                     '<th class="text-center">RATEE</th>' +
@@ -233,8 +260,30 @@
                                 }
 
                                 tbody.append(row);
-                            });
+                            }); 
 
+                            $.each(valuesData, function(index, value) { 
+                                var row = '<tr>' +
+                            '<td><input type="hidden" class="form-control col-lg-1" name="cids[' +
+                           value.cid + ']" value="' + value.cid +
+                            '">  <input type="text" class="form-control col-lg-1" name="ord[' +
+                           value.cid + ']" value="' + value.ord +
+                            '"></td><td><input type="text" class="form-control col-lg-4" name="value[' +
+                           value.cid + ']" value="' + value.value + '"></td>' +
+                            '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="critical[' +
+                           value.cid + ']" value="' + value.critical_incident + '"></td>' +
+                            '<td><input type="number"   class="form-control col-lg-1" name="percentage[' +
+                           value.cid + ']" value="' + value.percentage + '"></td>' +
+                            '<td>' +
+                            '<button class="btn btn-danger" type="button" onclick="deleteValues(' +
+                           value.cid + ')"><i class="fa fa-trash-o"></i></button>' +
+                            '</td>' +
+                            '</tr>';
+                            ModalValuesbody.append(row);  
+
+                            $('#indicatorSelect').append('<option value="' + value.cid + '" data-cid="' + value.cid + '">' + value.value + '</option>');
+
+                            });  
                             tbody.append(footer);
                             AchieveTable.append(AchieveHead);
                             AchieveTable.append(AchieveBody);
@@ -251,6 +300,65 @@
             }
         });
     });
+</script>
+
+<script> 
+ 
+ $('#versionSelect, #documentSelect, #indicatorSelect').change(function() {
+    var selectedVersion = $('#versionSelect').val();
+    var selectedDocument = $('#documentSelect').val();
+    var selectedValue = $('#indicatorSelect').val();
+
+    // Make an Ajax call only if both version and document are selected
+    if (selectedVersion && selectedDocument && selectedValue) {
+        $.ajax({
+            url: '{{ route('fetch-criteria') }}',
+            method: 'GET',
+            data: {
+                version: selectedVersion,
+                document: selectedDocument,
+                value: selectedValue
+            },
+            success: function(response) {
+                var criteriaData = response.criteria; 
+     
+                var tCriteriabody = $('#criteriaTable tbody');
+                tCriteriabody.empty();
+
+                if (criteriaData.length !== 0) {   
+                  
+
+                    $.each(criteriaData, function(index, criteria) {
+                        var criteriaRow = '<tr>' +
+                            '<td><input type="hidden" class="form-control col-lg-1" name="cids[' +
+                            criteria.cid +
+                            ']" value="' + criteria.cid +
+                            '">  <input type="text" class="form-control col-lg-1" name="ord[' +
+                            criteria.cid +
+                            ']" value="' + criteria.ord +
+                            '"></td><td><input type="text" class="form-control col-lg-4" name="criteria[' +
+                            criteria.cid +
+                            ']" value="' + criteria.criteria + '"></td>' +
+                            '<td><input type="number" min="0" max="1" class="form-control col-lg-1" name="remarks[' +
+                            criteria.cid + ']" value="' + criteria.remarks + '"></td>' +
+                            '<td>' +
+                            '<button class="btn btn-danger" type="button" onclick="deleteCriteria(' +
+                            criteria.cid + ')"><i class="fa fa-trash-o"></i></button>' +
+                            '</td>' +
+                            '</tr>';
+
+                        tCriteriabody.append(criteriaRow);
+                    });
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+});
+
+
 </script>
 
 

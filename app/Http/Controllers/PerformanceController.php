@@ -665,7 +665,29 @@ class PerformanceController extends Controller
     
         // Return the response
         return response()->json($responseData);
-    }
+    } 
+    public function fetchCriteria(Request $request)
+    {
+        // Retrieve the selected version and document from the request
+        $selectedVersion = $request->input('version');
+        $selectedDocument = $request->input('document');
+        $selectedValue = $request->input('value');
+    
+        // Fetch data from the 'values' table based on the selected version and document
+        $criteria = criteria::where('ver_cid', $selectedVersion)
+            ->where('doc_cid', $selectedDocument) 
+            ->where('ind_cid', $selectedValue)
+            ->orderBy('ord', 'asc')
+            ->get();
+    
+     
+        $responseData = [
+            'criteria' => $criteria,  
+        ];
+    
+        // Return the response
+        return response()->json($responseData);
+    } 
     
     
 }

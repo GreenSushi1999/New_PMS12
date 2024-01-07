@@ -67,3 +67,4 @@ Route::get('/settings', 'PerformanceController@settings');
  
 
 Route::get('/fetch-data-for-table',  'PerformanceController@fetchDataForTable')->name('fetch-values');
+Route::get('/fetch-criteria-for-table',  'PerformanceController@fetchCriteria')->name('fetch-criteria');
