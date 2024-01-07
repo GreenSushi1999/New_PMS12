@@ -33,7 +33,7 @@
                 </select>
             </div>
             <div class="col col-5">
-               <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editFile_modal"
+               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editFile_modal"
                onlick="openEditFile" id="editFile">Edit File</button>
                
             </div>
@@ -47,7 +47,7 @@
  <div class="modal fade" id="editFile_modal" tabindex="-1" aria-labelledby="editFileModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="exampleModalLabel">Edit File</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
